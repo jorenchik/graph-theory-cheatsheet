@@ -6,7 +6,8 @@
 \usepackage{setspace}
 \usepackage[a4paper, top=1in, bottom=1in, left=1in, right=1in]{geometry}
 \usepackage{float}
-\usepackage{hyperref}
+% \usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
 \usepackage[utf8]{inputenc}
 \usepackage[latvian]{babel}
 \usepackage{framed}
@@ -16,16 +17,24 @@
 \usepackage{tcolorbox}
 \usepackage{fontspec}
 \usepackage{makeidx}
+% \usepackage{ tipa }
 
 \graphicspath{{img/}}
 \setmainfont{DejaVu Serif}
-
+\newcommand{\illustration}[3]{
+	\begin{figure}[H]
+		\centering	
+		\includegraphics[width=#1\linewidth]{#2}
+		\caption{#3}
+	\end{figure}
+}
 
 \colorlet{LightGray}{White!90!Periwinkle}
 \colorlet{LightOrange}{Orange!15}
 \colorlet{LightGreen}{Green!15}
 
 \newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
+
 
 \declaretheoremstyle[name=Theorem,]{thmsty}
 \declaretheorem[style=thmsty,numberwithin=section]{theorem}
@@ -41,12 +50,12 @@
 
 \setstretch{1.2}
 \geometry{
-    textheight=9in,
-    textwidth=5.5in,
-    top=1in,
-    headheight=12pt,
-    headsep=25pt,
-    footskip=30pt
+textheight=9in,
+textwidth=5.5in,
+top=1in,
+headheight=12pt,
+headsep=25pt,
+footskip=30pt
 }
 
 \makeindex
@@ -61,12 +70,12 @@
 \title{ \normalsize \textsc{}
 		\\ [2.0cm]
 		\HRule{1.5pt} \\
-		\LARGE \textbf{\uppercase{Le Graph CHEATSHEET}
-		\HRule{2.0pt} \\ [0.6cm] \LARGE{Yeah} \vspace*{10\baselineskip}}
+		\LARGE \textbf{\uppercase{eksāmena materiāli}
+		\HRule{2.0pt} \\ [0.6cm] \LARGE{Grafu teorijas elementu} \vspace*{10\baselineskip}}
 		}
 \date{}
-\author{\textbf{Author} \\ 
-		Graph LORD}
+\author{\textbf{Autors} \\ 
+		Grafu cienītājs}
 
 \maketitle
 \newpage
@@ -77,285 +86,427 @@
 % ------------------------------------------------------------------------------
 
 \section{Pamatjēdieni}
-\textbf{Def.} Grafs G ir kopu pāris (V,E), kur V ir netukša kopa, kas sastāv no elementiem virsotnēm, un E ir kopa, kas sastāv no šķautnēm, kas savieno dažādu atsevišķu virsotņu pārus. Šī definīcija neiekļauj cilpas.\index{grafs!definīcija}
 
-\textbf{Def.}  Ja u ∈ E (x1 , x2 ), tad saka, ka šķautne ved no virsotnes x1 uz virsotni x2 , bet trijnieku (x1 , u, x2 ) sauc par grafa incidenci. Ja u ir šķautne, kas ved no x1 uz x2 , tad saka, ka x1 un x2 indicē jeb pieder šķautnei.  Un otrādi - ka u indicē jeb pieder virsotnēm x1 un x2.\index{incidence}
+\subsection{Grafs}
 
-\textbf{Def.}  Grafu sauc par galīgu, ja tam ir galīgs skaits šķautņu un virsotņu. Ja u indicē x1 un x2 , tad x1 un x2 ir gala virsotnes.\index{galīgs grafs}
+\textbf{Def.} Grafs $G$ ir kopu pāris $(V,E)$, kur $V$ ir netukša kopa, kas sastāv no elementiem virsotnēm, un $E$ ir kopa, kas sastāv no šķautnēm, kas savieno dažādu atsevišķu virsotņu pārus. Šī definīcija neiekļauj cilpas.\index{grafs!definīcija}
 
-\textbf{Def.} Neorientēta šķautne ved gan no x1 uz x2 , gan otrādi. Orientēta šķautne ved vienā virzienā, piem., no x1 uz x2. Ja šķautne, kas ved no x1 uz x2 ir orientēta, tad x1 sauc par sākuma, bet x2 par beigu virsotni. \index{orientēta šķautne}\index{neorientēta šķautne}
+\subsection{Incidence}
+
+\textbf{Def.}  Ja $u \in E (x_1 , x_2 )$, tad saka, ka šķautne ved no virsotnes $x_1$ uz virsotni $x_2$ , bet trijnieku $(x_1 , u, x_2 )$ sauc par grafa incidenci. Ja u ir šķautne, kas ved no $x_1$ uz $x_2$ , tad saka, ka $x_1$ un $x_2$ indicē jeb pieder šķautnei.  Un otrādi - ka $u$ indicē jeb pieder virsotnēm $x_1$ un $x_2$.\index{incidence}
+
+\textbf{Def.} Patvaļīgā grafā virsotni y sauc par blakusvirsotni virsotnei x, ja no x ved šķautne uz y.  Līdzīgi divu vai vairāk dažādas šķautnes sauc par blakusšķautnēm, ja tām ir kopīga virsotne.\index{blakusvirsotnes}\index{blakusšķautnes}
+
+\textbf{Def.} Neorientēta šķautne ved gan no $x_1$ uz $x_2$ , gan otrādi. Orientēta šķautne ved vienā virzienā, piem., no $x_1$ uz $x_2$. Ja šķautne, kas ved no $x_1$ uz $x_2$ ir orientēta, tad $x_1$ sauc par sākuma, bet $x_2$ par beigu virsotni. \index{orientēta šķautne}\index{neorientēta šķautne}
 
 \textbf{Def.} Šķautni, kuras gala virsotnes sakrīt sauc par cilpu. Pretējā gadījumā to dažkārt sauc par īstu šķautni.\index{cilpa}
 
 \section{Grafu klases}
 
-\textbf{Def.}  Grafam vienmēr ir vismaz viena virsotne, bet tam var nebūt neviena šķautne. Grafu, kam nav šķautņu sauc par bezšķautņu grafu. Grafu, kam nav īstu šķautņu (tikai varbūt cilpas) sauc par triviālu grafu.\index{bezšķautņu grafs}\index{triviāls grafs}
+\subsection{Galīgs grafs}
+
+\textbf{Def.}  Grafu sauc par galīgu, ja tam ir galīgs skaits šķautņu un virsotņu. Ja u indicē $x_1$ un $x_2$ , tad $x_1$ un $x_2$ ir gala virsotnes.\index{galīgs grafs}
+
+
+\textbf{Def.} Grafu, kam nav šķautņu sauc par bezšķautņu grafu. Grafu, kam nav īstu šķautņu (tikai varbūt cilpas) sauc par triviālu grafu.\index{bezšķautņu grafs}\index{triviāls grafs}
+
+
+\subsection{Orientēts grafs}
 
 \textbf{Def.} Grafu sauc par orientētu, ja tam nav šķautņu, kas nebūtu orientētas, un par neorientētu, ja tam nav šķautņu, kas nebūtu neorientētas.  Jaukts ir tāds grafs, kam ir gan orientētas, gan neorientētas šķautnes, neskaitot cilpas.\index{orientēts grafs}\index{neorientēts grafs}
 
-\textbf{Def.} Ja ir dots patvaļīgs orientēts grafs G=(V,E) tad Ĕ (x, y ) = E (y , x) G apvērstais grafs - apvērš škautņu orientācijas. E (x, y ) = E (y , x) u Ĕ (x, y ) G piesaistītais grafs - atmet šķautņu orientācijas. \index{piesaistītais grafs}\index{apvērstais grafs}
+\textbf{Def.} Ja ir dots patvaļīgs orientēts grafs $G=(V,E)$ tad $\overset{\smallsmile}{E}(x, y ) = E (y , x )$ G apvērstais grafs - apvērš škautņu orientācijas. $\overline{E} (x, y ) = E (y , x)\cup \overset{\smallsmile}{E} (x, y ) G$ piesaistītais grafs - atmet šķautņu orientācijas. \index{piesaistītais grafs}\index{apvērstais grafs}
 
-\textbf{Def.} Grafu sauc par vienkāršu jeb unigrafu, ja no katras tā virsotnes uz katru citu ved ne vairāk kā viena šķautne. Pretējā gadījumā (ja ir paralēlas šķautnes) - to sauc par daudzkāršu jeb multigrafu.\index{unigrafs}\index{multigrafs}
 
-\textbf{Def.} Par Berža grafu sauc ikvienu vienkāršu orientētu grafu, bet par parastu grafu - ikvienu neorientētu grafu bez cilpām.
+\subsection{Vienkāršs jeb unigrafs}
 
-\textbf{Def.} Patvaļīgā grafā virsotni y sauc par blakusvirsotni virsotnei x, ja no x ved šķautne uz y.
-Līdzīgi divu vai vairāk dažādas šķautnes sauc par blakusšķautnēm, ja tām ir kopīga virsotne.
+\textbf{Def.} Grafu sauc par vienkāršu jeb unigrafu, ja no katras tā virsotnes uz katru citu ved ne vairāk kā viena šķautne. Pretējā gadījumā (ja ir paralēlas šķautnes) - to sauc par daudzkāršu jeb multigrafu.\index{unigrafs}\index{multigrafs}\index{vienkāršs grafs}
 
-\textbf{Def.} Parastu grafu, kam jebkuras divas dažādas virsotnes ir blakusvirsotnes sauc par pilnu grafu. Katram fiksētam virsotņu skaitam tāds ir tikai viens. Pilnu grafu ar p virsotnēm parasti apzīmē ar Kp .
 
-\textbf{Def.} Par zvaigznes grafu sauc parastu grafu, kurā ir tāda virsotne, kas ir. Vienīgā blakusvirsotne katrai no pārējām.  Šāds grafs katrai fiksētai virsotnei ir tikai viens. Zvaigznes grafu ar p virsotnēm parasti apzīmē ar Sp −1 (p-1 ir staru skaits).
+\subsection{Berža grafs}
 
-\textbf{Def.}  Grafu sauc par vienkāršu jeb unigrafu, ja no katras tā virsotnes uz katru citu ved ne vairāk kā viena šķautne. Pretējā gadījumā (ja ir paralēlas šķautnes) - to sauc par daudzkāršu jeb multigrafu.  Par Berža grafu sauc ikvienu vienkāršu orientētu grafu, bet par parastu grafu - ikvienu neorientētu grafu bez cilpām.
+\textbf{Def.} Par Berža grafu sauc ikvienu vienkāršu orientētu grafu, bet par parastu grafu - ikvienu neorientētu grafu bez cilpām.\index{Berža grafs} 
 
-\textbf{Def.}  Parastu grafu, kam jebkuras divas dažādas virsotnes ir blakusvirsotnes sauc par pilnu grafu (complete graph).  Katram fiksētam virsotņu skaitam tāds ir tikai viens Pilnu grafu ar n virsotnēm parasti apzīmē ar Kn
-|E | =n C2
 
-\textbf{Def.}  Grafs ir divdaļīgs (bipartite), ja tā virsotnes var sadalīt 2 kopās K un L tā, lai katrai šķautnei uv ∈ E viena no virsotnēm pieder K un otra L, t.i., u ∈ K , v ∈ L.  Pilnam divdaļu (complete bipartite) grafam ir visas iespējamās šķautnes starp abu virsotņu kopu K un L virsotnēm.  Pilnu grafu ar n virsotnēm parasti apzīmē ar Kn,m.  Divdaļu grafam raksturīgi, ka visi cilki ir ar pāra skaita garumu (taču var arī nebūt divdaļu grafā cikli).
+\subsection{Pilns grafs}
 
-\textbf{Def.}  Par zvaigznes (star) grafu sauc parastu grafu, kurā ir tāda virsotne, kas ir vienīgā blakusvirsotne katrai no pārējām.  Zvaigznes grafu ar p virsotnēm parasti apzīmē ar Sp −1 (p-1 ir staru skaits).
+\textbf{Def.} Parastu grafu, kam jebkuras divas dažādas virsotnes ir blakusvirsotnes sauc par pilnu grafu. Katram fiksētam virsotņu skaitam tāds ir tikai viens. Pilnu grafu ar $p$ virsotnēm parasti apzīmē ar $K_p$ .\index{parasts grafs}
 
-\textbf{Def.}  Par rata (wheel) grafu ar kārtu n sauc grafu kas sastāv no n-1 gara cikla, kura ikviena no virsotnēm ir savienota ar vienu kopīgu virsotni.  Rata grafu ar n virsotnēm parasti apzīmē ar Wn.
+\subsection{Zvaigznes grafs}
+
+\textbf{Def.} Par zvaigznes grafu sauc parastu grafu, kurā ir tāda virsotne, kas ir. Vienīgā blakusvirsotne katrai no pārējām.  Šāds grafs katrai fiksētai virsotnei ir tikai viens. Zvaigznes grafu ar $p$ virsotnēm parasti apzīmē ar $S_p−1$ (p-1 ir staru skaits).\index{zvaigznes grafs}
+
+
+\textbf{Def.}  Parastu grafu, kam jebkuras divas dažādas virsotnes ir blakusvirsotnes sauc par pilnu grafu (complete graph).\index{pilnais grafs}
+
+\begin{itemize}
+	\item Katram fiksētam virsotņu skaitam tāds ir tikai viens.
+	\item Pilnu grafu ar $n$ virsotnēm parasti apzīmē ar $K_n$ 
+	\item $|E | =_n C_2$
+\end{itemize}
+
+\textbf{Def.}  Par brīvu sauc tādu virsotni, kurai pieder viena īsta šķautne. Par izolētu sauc tādu virsotni, kurai nepieder neviena īsta šķautne.  Ja virsotnei nav neviena šķautne, pat ne cilpa, tad to sauc par bezšķautņu virsotni.\index{brīva virsotne}
+
+\subsection{Divdaļīgs grafs}
+
+\textbf{Def.}  Grafs ir divdaļīgs (bipartite), ja tā virsotnes var sadalīt 2 kopās K un L tā, lai katrai šķautnei $uv \in E$ viena no virsotnēm pieder K un otra L, t.i., $u \in K$ , $v \in L$.  Pilnam divdaļu (complete bipartite) grafam ir visas iespējamās šķautnes starp abu virsotņu kopu K un L virsotnēm.  Pilnu grafu ar n virsotnēm parasti apzīmē ar $K_n$,m.  Divdaļu grafam raksturīgi, ka visi cilki ir ar pāra skaita garumu (taču var arī nebūt divdaļu grafā cikli).\index{divdaļīgs grafs}
+
+
+\subsection{Rats}
+
+\textbf{Def.}  Par rata (wheel) grafu ar kārtu n sauc grafu kas sastāv no $n-1$ gara cikla, kura ikviena no virsotnēm ir savienota ar vienu kopīgu virsotni.  Rata grafu ar n virsotnēm parasti apzīmē ar Wn.\index{rats}
 
 \subsection{Sakarīgs grafs}
 
-\textbf{Def.}  Grafs ir sakarīgs, ja jebkurām virsotnēm u, v eksistē ceļš no u uz v.
+\subsubsection{Definīcijas}
 
-\textbf{Def.}  Grafa sakarīgā komponente G'=(V',E'), kur V' ir maksimālā virsotņu kopa ar īpašību, ka katrām divām virsotnēm u,v ∈ V 0 eksistē ceļš u → v , E':uv ∈ E , u ∈ V 0 , v ∈ V 0 .  Virsotnes atvērta apkārtne NG (v ) = {u|uv ∈ E } - visas virsotnes, kas ir blakusvirsotnes v ∈ G.
+\textbf{Def.}  Grafs ir sakarīgs, ja jebkurām virsotnēm u, v eksistē ceļš no u uz v.\index{sakarīgs grafs}
 
-\textbf{Def.} Virsotnes slēgta apkārtne NG [v ] = {u|uv ∈ E } u {v ∈ V } - visas virsotnes, kas ir
-blakusvirsotnes v ∈ G un ietver arī pašu virsotni v.
 
-\textbf{Def.}  Par brīvu sauc tādu virsotni, kurai pieder viena īsta šķautne. Par izolētu sauc tādu virsotni, kurai nepieder neviena īsta šķautne.  Ja virsotnei nav neviena šķautne, pat ne cilpa, tad to sauc par bezšķautņu virsotni.
+\textbf{Def.} Virsotnes atvērta apkārtne $N_G (v ) = \{u|uv \in E \}$ - visas virsotnes, kas ir blakusvirsotnes $v \in G$.\index{apkārtne}\index{atvērta apkārtne}
 
+\textbf{Def.} Virsotnes slēgta apkārtne $N_G [v ] = \{u|uv \in E \} \cup \{v \in V \} $- visas virsotnes, kas ir blakusvirsotnes $v \in G$ un ietver arī pašu virsotni v.\index{slēgta apkārtne}
+
+
+\subsubsection{Sakarīga komponente}
+
+\textbf{Def.}  Grafa sakarīgā komponente $G'=(V',E')$, kur $V'$ ir maksimālā virsotņu kopa ar īpašību, ka katrām divām virsotnēm u,$v \in V 0$ eksistē ceļš $ u → v$ , $E':uv \in E$ , $u \in V 0 , v \in V 0$ . \index{nesakarīga komponente}
+
+\textbf{Def.}  Par grafa G sakarīgo komponenti jeb komponenti sauc jebkuru maksimālu sakarīgu apakšgrafu.\index{sakarīga komponente}
+Maksimāls nozīmē, ka apakšgrafam zūd sakarības īpašība, ja tam pievieno vēl kādu no grafa G virsotnēm. Tas nozīmē, ja apakšgrafu var papildināt līdz lielākam, bet tomēr vēl sakarīgam, tad vēl nav bijusi aplūkota komponente.  Sakarīgu komponenšu skaitu apzīmē ar s.  Grafu G sauc apr viensakarīgu, ja tas ir sakarīgs, bet atmetot vienu virsotni v līdz ar tai incidentām šķautnēm, rodas nesakarīgs grafs. Šādu virsotni v sauc par sasaistes virsotni.\index{maksimāli sakarīgs grafs}
+
+\subsubsection{k-sakarība}
+
+\textbf{Def.} Grafu G sauc par divaskarīgu, ja tas nav viensakarīgs, bet atmetot 2 virsotnes $v_i$ un $v_j$ un tām incidentās šķautnes - rodas nesakarīgs grafs. Trīssakarīgs ir tāds grafs, kas nav divsakarīgs, bet atmetot 3 virsotnes ar tām incidentām šķautnēm, rodas nesakarīgs grafs.\index{k-sakarīgs grafs}
+
+Daži fakti:
+\begin{itemize}
+	\item Koks ir 1-sakarīgs, bet nav 2-sakarīgs.
+	\item Ja grafs ir nesakarīgs, tad tas ir 0-sakarīgs un nav 1-sakarīgs.
+	\item Grafs ir sakarīgs, tad un tikai tad, ja tas ir 1-sakarīgs.
+	\item Pilns grafs $K_n$ ir (n – 1)-sakarīgs.
+	\item Ja grafs ir k-sakarīgs, tad $k \le \min(d(v))$, kur $d(v)$ ir virsotnes v pakāpe.
+\end{itemize}\index{k-sakarība}
+
+\subsubsection{Sadalošā un atdalošā kopa}
+
+\textbf{Def.}  Sakarīga grafa $G = (V, E)$ virsotņu apakškopu $S$ sauc par sadalošo kopu, ja grafs $G(V \backslash S)$ ir nesakarīgs.
+Sakarīga grafa sadalošā virsotne veido sadalošo kopu.  Grafam $K_n$ nav nevienas sadalošās kopas.\index{sadalošā kopa}
+
+\textbf{Def.}  Grafa $G = (V, E)$ virsotņu apakškopu S sauc par virsotnes x un y atdalošo kopu, ja x un y pieder dažādām $G(V \backslash S)$ sakarīgajām komponentēm.\index{atdalošā kopa}
+
+\textbf{Def.} Šķēlums ir šķautņu kopa, kuru izmetot grafs sadalās divās daļās.\index{šķēlums}
 
 \section{Grafa raksturlielumi}
 
-\textbf{Def.}  Par neorientēta grafa virsotnes pakāpi dv (degv ) sauc skaitli, ko iegūst saskaitot šai virsotnei piederošo īsto šķautņu skaitu ar divkāršotu tai piederošo cilpu skaitu.  Vizuāli tas ir virsotnei piederošķautņu galu skaits, vienāds ar atvērtas apkārtnes virsotņu skaitu min pakāpe δ(G ) max pakāpe ∆(G )
+\subsection{Virsotnes pakāpe}
 
-\textbf{Def.} Par homogēnu (regulāru, r-regulāru) grafu sauc tādu grafu, kam visu virsotņu pakāpes ir vienādas.
-degG v = δ(G ) = ∆(G ) = r ∀v ∈ V (G)
+\subsubsection{Definīcijas}
 
-\textbf{Def.}  Par neorientēta grafa virsotnes pakāpi dv (degv ) sauc skaitli, ko iegūst saskaitot šai virsotnei piederošo īsto šķautņu skaitu ar divkāršotu tai piederošo cilpu skaitu. Vizuāli tas ir virsotnei piederošķautņu galu skaits.
+\textbf{Def.}  Par neorientēta grafa virsotnes pakāpi $d_v (degv)$ sauc skaitli, ko iegūst saskaitot šai virsotnei piederošo īsto šķautņu skaitu ar divkāršotu tai piederošo cilpu skaitu. Vizuāli tas ir virsotnei piederošķautņu galu skaits.\index{virsotnes pakāpe}
 
-Virsotnes pakāpe \textbf{T. }Virsotņu pakāpju summa = divkārš šķautņu skaits grafā.  degv = 2|E (G )| v ∈ V (G)
+\textbf{Def.} \index{maksimālā virsotnes pakāpe} Par neorientēta grafa virsotnes pakāpi $d_v (degv )$ sauc skaitli, ko iegūst saskaitot šai virsotnei piederošo īsto šķautņu skaitu ar divkāršotu tai piederošo cilpu skaitu.  Vizuāli tas ir virsotnei piederošķautņu galu skaits, vienāds ar atvērtas apkārtnes virsotņu skaitu min pakāpe $\delta(G )$ max pakāpe $\Delta(G )$.\index{maksimālā virsotnes pakāpe}
 
-\textbf{S. } Grafā ir pāra skaits virsotņu ar nepāra pakāpēm.
+\subsubsection{Havela–Hakimi teorēma (Rokasspiediena lemma)}
 
-P.  Katrā sakarīgā komponentē ir pāra skaits virsotņu ar nepāra pakāpi.
+\textbf{T.} Neorientēta grafa visu virsotņu pakāpju summa ir vienāda ar divreiz šķautņu skaitu grafā.\index{virsotņu pakāpju teorēma}
+
+\begin{equation}
+	\sum_{ v \in V (G)}^{} degv = 2 | E(G) | 
+\end{equation}\index{virsotnes pakāpe}\index{šķautnes un pakāpes}
+
+\textbf{S.} Visu virsotņu pakāpju summai jābūt pāra skaitlim. \index{virsotņu pakāpju paritāte}
+
+\textbf{S. } Grafā ir pāra skaits virsotņu ar nepāra pakāpēm. \index{virsotņu ar nepāra pakāpi skaits}
+
+\textbf{P. } Katrā sakarīgā komponentē ir pāra skaits virsotņu ar nepāra pakāpi.\index{virsotnes pakāpes sakarīgās komponentes}
+
+Havela-Hakimi teorēma nodrošina algoritmu, lai pārbaudītu, vai noteiktā pakāpju secība ir atbilst grafam, citiem vārdiem, noskaidro, vai tāds grafs eksistē. \index{virsotņu pakāpju-eksistences teorēma}
+
+\textbf{Algoritms:}
+\begin{itemize}
+	\item Sakārtojiet grādu secību, kas nav pieaugoša.  \item Noņemiet pirmo skaitli n un samaziniet nākamos n skaitļus katru par 1.
+	\item Atkārtojiet šo procesu, līdz:
+	\begin{itemize}
+		\item secība ir tukša, tādā gadījumā sākotnējā secība ir grafiska vai
+		\item jūs saskaraties ar negatīvu skaitli vai jums ir jāsamazina vairāk skaitļu, nekā jums ir atlicis, tādā gadījumā secība nav grafiska.
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Homogēns grafs}
+
+
+\textbf{Def.} Par homogēnu (regulāru, r-regulāru) grafu sauc tādu grafu, kam visu virsotņu pakāpes ir vienādas.\index{homogēns grafs}
 
 \textbf{S. } Ja grafā ir tieši 2 virsotnes ar nepāra pakāpi, tad eksistē ceļš no vienas uz
-otru.
+otru.\index{virsotnes pakāpe}
+
+
 
 \section{Virsotņu virknes}
 
-\textbf{Def.}  Par maršrutu (walk) grafā sauc tādu šī grafa virsotņu un šķautņu virkni x0 u1 x2 u2 x3 ...ul xl , kur l ≥ 0 un katrs trijnkieks (xi −1 , ui , xi ) ir grafa incidence.Tas ir, katra šķautne ui ved no virsotnes xi −1 uz xi .
+\textbf{Def.}  Par maršrutu (walk) grafā sauc tādu šī grafa virsotņu un šķautņu virkni $x_0 u1 x_2 u_2 x_3 ...u_l x_l $, kur $l \ge 0$ un katrs trijnkieks $(x_{i−1} , ui , x_i )$ ir grafa incidence.Tas ir, katra šķautne ui ved no virsotnes $x_{i −1}$ uz $xi $.\index{maršruts}
 
-\textbf{Def.}  Virsotni x0 sauc par maršruta sākuma virsotni un virsotni xl sauc par maršruta beigu virsotni, bet l sauc par maršruta garumu.  Maršrutu sauc par noslēgtu, ja tā beigu virsotne sakrīt ar sākuma virsotni (u0 = ul ).  0-maršruts sastāv no vienas virsotnes. Tas ir triviāls jeb tukšs marštuts.
+\textbf{Def.}  Virsotni $x_0$ sauc par maršruta sākuma virsotni un virsotni $x_l$ sauc par maršruta beigu virsotni, bet $l$ sauc par maršruta garumu.  Maršrutu sauc par noslēgtu, ja tā beigu virsotne sakrīt ar sākuma virsotni $(u_0 = u_l )$.  0-maršruts sastāv no vienas virsotnes. Tas ir triviāls jeb tukšs maršruts.\index{maršruts!maršruta sastāvdaļas}\index{maršruts!īpaši maršruti}
 
-\textbf{Def.}  Maršrutu sauc par ceļu/ķēdi (path), ja visas virsotnes ir dažādas.  Maršrutu sauc par cilku (cycle), ja noslēgtā maršrutā visas virsotnes ir dažādas.
+\textbf{Def.}  Maršrutu sauc par ceļu/ķēdi (path), ja visas virsotnes ir dažādas.  Maršrutu sauc par cilku (cycle), ja noslēgtā maršrutā visas virsotnes ir dažādas.\index{ķēde}
 
-\textbf{T.}  Ja ir maršruts a→ b, tad ir arī ceļš a → b.
+\textbf{T.}  Ja ir maršruts $ a \to b$, tad ir arī ceļš $a \to b.$ \index{maršruta saikne ar ceļu}
 
-\subsection{Divdaļīgs grafs}
+\subsection{Divdaļīga grafa ciklu definīcija}
 
-\textbf{T.}  Grafs ir divdaļīgs ⇔ katram ciklam ir pāra garums
+\textbf{T.}  Grafs ir divdaļīgs $\Leftrightarrow$ katram ciklam ir pāra garums. \index{divdaļīgi grafi!cikli}
 
 \subsection{Divdaļu grafa sakārtojuma konstruēšanas algoritms}
-ievieto kādu virsotni u virsotņu kopā K (iekrāso vienā krāsā)
-ievieto visas virsotnes v, kas ir incidentas u, virsotņu kopā L (iekrāso
-otrā krāsā)
-ieveto visas virsotnes v, kur īsākais ceļš no u uz v sastāv no 2, 4, ...  šķautnēm virsotņu kopā K (turpina krāsot iepriekšējā solī iekrāsoto virsotņu blakusvirsotnes pretējā krāsā)
-ieveto visas virsotnes v, kur īsākais ceļš no u uz v sastāv no 3, 5, ...
-šķautnēm virsotņu kopā L (turpina krāsot iepriekšējā solī iekrāsoto virsotņu blakusvirsotnes pretējā krāsā)
-
+\begin{itemize}
+	\item ievieto kādu virsotni u virsotņu kopā K (iekrāso vienā krāsā)
+	\item ievieto visas virsotnes $v$, kas ir incidentas u, virsotņu kopā $L$ (iekrāso otrā krāsā)
+	\item ieveto visas virsotnes v, kur īsākais ceļš no u uz v sastāv no 2, 4, ...  šķautnēm virsotņu kopā K (turpina krāsot iepriekšējā solī iekrāsoto virsotņu blakusvirsotnes pretējā krāsā)
+	\item ieveto visas virsotnes v, kur īsākais ceļš no u uz v sastāv no 3, 5, ...  šķautnēm virsotņu kopā L (turpina krāsot iepriekšējā solī iekrāsoto virsotņu blakusvirsotnes pretējā krāsā)
+\end{itemize}
 
 \section{Grafu izomorfisms}
 
-\textbf{Def.}  Divi grafi G un G' ir izomorfi, ja pastāv savstarpēji viennozīmīgs attēlojums (bijekcija) starp grafa G un grafa G' virsotnēm, tāda ka virsotnes ir incidentas grafā G ⇔ ja atbilstošās virsotnes ir incidentas grafā G'.
-Šādu savstarpēji viennozīmīgu atbilstību, kas saglabā virsotņu incidenci sauc par izomorfismu.  Izomorfos grafos ir: vienāds skaits virsotņu; vienāds skaits šķautņu; vienāds skaits virsotņu ar noteiktām virsotņu pakāpēm, turklāt; izomorfisms saglabā virsotņu pakāpes, tas ir, atbilstošajām virsotnēm; abos grafos ir vienāda pakāpe strukturālas līdzības (piem., divdaļīgs grafs, regulārs grafs).
+\textbf{Def.}  Divi grafi $G$ un $G'$ ir izomorfi, ja pastāv savstarpēji viennozīmīgs attēlojums (bijekcija) starp grafa G un grafa G' virsotnēm, tāda ka virsotnes ir incidentas grafā G $\Leftrightarrow$ ja atbilstošās virsotnes ir incidentas grafā G'.  Šādu savstarpēji viennozīmīgu atbilstību, kas saglabā virsotņu incidenci sauc par izomorfismu.  
+Izomorfos grafos ir: vienāds skaits virsotņu; vienāds skaits šķautņu; vienāds skaits virsotņu ar noteiktām virsotņu pakāpēm, turklāt; izomorfisms saglabā virsotņu pakāpes, tas ir, atbilstošajām virsotnēm; abos grafos ir vienāda pakāpe strukturālas līdzības (piem., divdaļīgs grafs, regulārs grafs).\index{izomorfizms}
 
-Sistemātiska pārbaude, pārbaudot katru virsotni. Piem., sāk ar 5 un e (abām degv=1).
+\subsection{Sistemātiskā pārbaude}
+
+Sistemātiska pārbaude, pārbaudot katru virsotni. Piem., sāk ar 5 un $e$ (abām $degv=1$).
+\illustration{1}{isomorphism-1}{Sistemātiskās pārbaudes piemērs}\index{izomorfizms!pārbaude}
 
 \subsection{Papildgrafs}
 
-\textbf{Def.}  Par grafa G=(V , E ) papildgrafu Ḡ = (V , Ē ) sauc grafu, kurš satur visas grafa G virsotnes, bet šķautņu kopu veido tās virsotnes, kas G nav incidentas.  Grafa G apvienojums ar Ḡ veido pilnu grafu divi grafi G1 un G2 ir izomorfi ⇔ G¯1 un G¯2 ir izomorfi papildgrafu var izmantot grafu izomorfisma noteikšanā
+\textbf{Def.}  Par grafa $G=(V , E )$ papildgrafu $Ḡ = (V , Ē )$ sauc grafu, kurš satur visas grafa $G$ virsotnes, bet šķautņu kopu veido tās virsotnes, kas $G$ nav incidentas.  Grafa $G$ apvienojums ar $G$̄ veido pilnu grafu divi grafi $G_1$ un $G_2$ ir izomorfi $\Leftrightarrow \overline{G}_1 $ un $ \overline{G}_2$ ir izomorfi papildgrafu var izmantot grafu izomorfisma noteikšanā.\index{papildgrafi}
 
 \section{Planāri grafi}
-Dabisks grafu piemērs ir ceļu kartes. Šādas kartes raksturo īpašība - tos var uzzīmēt ar šķautnēm (ceļiem) krustojoties tikai krustpunktos virsotnēs (krustcelēs).
-\textbf{Def.}  Grafs ir planārs, ja to var uzzīmēt plaknē tā, ka šķautnes nekrustojas.  
+Dabisks grafu piemērs ir ceļu kartes. Šādas kartes raksturo īpašība - tos var uzzīmēt ar šķautnēm (ceļiem) krustojoties tikai krustpunktos virsotnēs (krustcelēs).\index{planāri grafi}
+
+\textbf{Def.}  Grafs ir planārs, ja to var uzzīmēt plaknē tā, ka šķautnes nekrustojas. \index{planāri grafi}
 
 \subsection{Apakšgrafs, parciālgrafs, daļgrafs}
 \textbf{Def.}  Grafa G apakšgrafs G' ir grafs, ko veido grafa G virsotņu un šķautņu kopu apakškopas.  Par grafa G apakšgrafu sauc tādu grafu G', ko iegūst atmetot grafa G jebkuru skaitu virsotņu kopā ar tām piederošajām šķautnēm un tāpat, jebkuru skaitu šķautņu bez to gala virsotnēm
-Izmetot šķautnes no planāra/plakana grafa → iegūst planāru/plakanu grafu pievienojot jaunas šķautnes planāram/plakanam grafam → var grafu padarīt neplanāru/neplakanu.
+Izmetot šķautnes no planāra/plakana grafa → iegūst planāru/plakanu grafu pievienojot jaunas šķautnes planāram/plakanam grafam → var grafu padarīt neplanāru/neplakanu.\index{apakšgrafs} \index{apakšgrafi}\index{parciālgrafi}\index{daļgraffi}
 
-\textbf{Def.}  Maksimāli planārs grafs - ja tas pārstāj būt parasts un planārs pēc jaunas šķautnes pievienošanas vienalga starp kurām divām tā virsotnēm.
+\textbf{Def.}  Maksimāli planārs grafs - ja tas pārstāj būt parasts un planārs pēc jaunas šķautnes pievienošanas vienalga starp kurām divām tā virsotnēm.\index{planāri grafi!maksimāli planāri grafi}
 
-Jebkurš grafs ar n virsotnēm ir pilna grafa Kn apakšgrafs ja divi grafi ir izomorfi, tad apakšgrafi, kas veidojušies no atbilstošām virsotnēm un šķautnēm arī ir izomorfi apakšgrafu var izmantot grafu izomorfisma noteikšanā
+Jebkurš grafs ar n virsotnēm ir pilna grafa $K_n$ apakšgrafs ja divi grafi ir izomorfi, tad apakšgrafi, kas veidojušies no atbilstošām virsotnēm un šķautnēm arī ir izomorfi apakšgrafu var izmantot grafu izomorfisma noteikšanā
 
-\textbf{Def.} Par grafa G = (V,E) parciālgrafu sauc grafu G 0 = (V , E *), E* ⊂ E , kura virsotņu kopa ir vienāda ar grafa G virsotņu kopu, bet šķautņu kopa ir daļa no G šķautņu kopas.  Grafa G = (V,E) daļgrafs G 0 = (V 0 , E 0 ) satur gan daļu no grafa virsotnēm, gan šķautnēm, tomēr katrai šķautnei e ∈ E 0 virsotnes e = (vi , vj ) pieder kopai V 0 ⊂ V .
+\textbf{Def.} Par grafa $G = (V,E)$ parciālgrafu sauc grafu $G 0 = (V , E *)$, $E* \subset E$ , kura virsotņu kopa ir vienāda ar grafa G virsotņu kopu, bet šķautņu kopa ir daļa no G šķautņu kopas.  Grafa $G = (V,E)$ daļgrafs $G_0 = (V_0 , E_0 )$ satur gan daļu no grafa virsotnēm, gan šķautnēm, tomēr katrai šķautnei $e \in E 0$ virsotnes $e = (v_i , v_j )$ pieder kopai $V 0 ⊂ V$.\index{parciālgrafi}
 
-\textbf{Def.} Plakans grafs ir tāds planārs grafs, kas ir uzzīmēts tā, ka šķautnes nekrustojas.  Plakans grafs sadala plakni regionos.
-\textbf{Def.}  Cilku, kas ierobežo plaknes daļu, kura nesatur ne virsotnes, ne šķautnes sauc par robežcilku.
-\textbf{Def.} Par plakana grafa skaldni (face) sauc ikvienu plaknes daļu (arī neierobežoto, bezgalīgo), ko norobežo robežcikls.  Ja grafā ciklu nav - par skaldni uzskata visu planki.  Ārējo robežciklu veido šķautnes, kas atdala grafu no bezgalīgās skaldnes.  Skaldņu skaitu apzīmē ar r. Ja skatās uz jebkuru skaldni maksimālā planārā grafā - visi ir trīsstūri jebkuras skaldnes robeža var tikt pārveidota kā ārējā robeža. Skaldņu skaits paliek nemainīgs.  Skaldnes pakāpe df ir šķautņu skaits, kas ierobežo skaldni.
+\textbf{Def.} Plakans grafs ir tāds planārs grafs, kas ir uzzīmēts tā, ka šķautnes nekrustojas.  Plakans grafs sadala plakni regionos.\index{plakani grafi}
+
+\textbf{Def.}  Cilku, kas ierobežo plaknes daļu, kura nesatur ne virsotnes, ne šķautnes sauc par robežcilku.\index{robežcikli}
+
+\textbf{Def.} Par plakana grafa skaldni (face) sauc ikvienu plaknes daļu (arī neierobežoto, bezgalīgo), ko norobežo robežcikls.  Ja grafā ciklu nav - par skaldni uzskata visu planki.  Ārējo robežciklu veido šķautnes, kas atdala grafu no bezgalīgās skaldnes.  Skaldņu skaitu apzīmē ar r. Ja skatās uz jebkuru skaldni maksimālā planārā grafā - visi ir trīsstūri jebkuras skaldnes robeža var tikt pārveidota kā ārējā robeža. Skaldņu skaits paliek nemainīgs.  Skaldnes pakāpe df ir šķautņu skaits, kas ierobežo skaldni.\index{skaldnes}
 
 \subsection{Apļa-hordu metode (Circle-chord method)}
 → no pretējā
-pieņem, ka ir plakans/planārs
-ja pretruna - tad pieņēmums ir aplams
-Atrod cilku, kas satur visas grafa virsotnes (var gadīties, ka nav tāds cikls, bet šobrīd skatamies gadījumus, kas ir) uzzīmē ciklu kā lielu apli atlikušās šķautnes-hordas jāzīmē iekšpus vai ārpus apļa plaknē pirmo hordu izvēlas zīmēt, piemēram, ārpus apļa.
-Šī horda liks citām būt iezīmētām iekšpusē (ja zīmētu ārpusē, tad krustotos) Iekšpuses hordas savukārt liks citas zīmēt ārpusē.  Ja nonāk pie situācijas, kad nav iespēja ievilkt šķautni bez krustošanās, tad nav planārs.
-Ja var visas šķautnes savilkt bez krustošanās, tad ir plakans.  Nav nozīme, vai pirmo šķautni velk iekšpus vai ārpus apļa.  Pastāv efektīvi algoritmi, kā noteikt, vai grafs ir planārs, atšķirībā no izomorfisma.
+\begin{itemize}
+	\item pieņem, ka ir plakans/planārs
+	\item ja pretruna - tad pieņēmums ir aplams
+\end{itemize}\index{Apļa-hordu metode}
 
-\subsection{Sakarīga komponente}
-\textbf{Def.}  Par grafa G sakarīgo komponenti jeb komponenti sauc jebkuru maksimālu sakarīgu apakšgrafu.
-Maksimāls nozīmē, ka apakšgrafam zūd sakarības īpašība, ja tam pievieno vēl kādu no grafa G virsotnēm. Tas nozīmē, ja apakšgrafu var papildināt līdz lielākam, bet tomēr vēl sakarīgam, tad vēl nav bijusi aplūkota komponente.  Sakarīgu komponenšu skaitu apzīmē ar s.  Grafu G sauc apr viensakarīgu, ja tas ir sakarīgs, bet atmetot vienu virsotni v līdz ar tai incidentām šķautnēm, rodas nesakarīgs grafs. Šādu virsotni v sauc par sasaistes virsotni.
-Grafu G sauc par divaskarīgu, ja tas nav viensakarīgs, bet atmetot 2 virsotnes vi un vj un tām incidentās šķautnes - rodas nesakarīgs grafs. Trīssakarīgs ir tāds grafs, kas nav divsakarīgs, bet atmetot 3 virsotnes ar tām incidentām šķautnēm, rodas nesakarīgs grafs.
+\begin{itemize}
+	\item atrod cilku, kas satur visas grafa virsotnes (var gadīties, ka nav tāds cikls, bet šobrīd skatamies gadījumus, kas ir)
+	\item uzzīmē ciklu kā lielu apli 
+	\item atlikušās šķautnes-hordas jāzīmē iekšpus vai ārpus apļa plaknē
+	\item pirmo hordu izvēlas zīmēt piemēram, ārpus apļa.
+	\subitem Šī horda liks citām būt iezīmētām iekšpusē (ja zīmētu ārpusē, tad krustotos) Iekšpuses hordas savukārt liks citas zīmēt ārpusē.
+	\subitem Ja nonāk pie situācijas, kad nav iespēja ievilkt šķautni bez krustošanās, tad nav planārs.
+	\subitem Ja var visas šķautnes savilkt bez krustošanās, tad ir plakans. 
+\end{itemize}
+
+Nav nozīme, vai pirmo šķautni velk iekšpus vai ārpus apļa.  Pastāv efektīvi algoritmi, kā noteikt, vai grafs ir planārs, atšķirībā no izomorfisma.
+
+\subsubsection{Piemērs}
+
+Sāksim ar divdaļīgu grafu (grafs var būt jebkura veida). 
+\illustration{0.5}{circle_chord_method-1}{Planārs vai neplanārs grafs }
+	
+\textbf{1. darbība:} Atrodiet ķēdi, kurā ir visas grafika virsotnes. 
+
+\illustration{0.5}{circle_chord_method-2}{Ķēde ar visām virsotnēm (dzeltenā krāsā) }
+
+\textbf{2. darbība.} Izvietojiet atrasto ķēdi kā lielu apli. Iezīmējiet virsotnes, apzīmējot tās tā pat kā oriģinālajā grafā. 
+
+\illustration{0.5}{circle_chord_method-3}{Ķēde izvietota apļa veidā}
+
+\textbf{3. darbība.} Pievienojiet hordas, no sākotnējā grafa.  Piemēram A virsotnei. Tā kā virsotne A bija savienota ar virsotni E un virsotni H ar apli, man bija jāsavieno tikai virsotne A un virsotne F. – Varat to uzzīmēt apļa iekšpusē vai ārpusē.
+
+
+\illustration{0.5}{circle_chord_method-4}{Hordas ir pievienotas virsotnei A}
+
+Tālāk ir jāsavieno virsotne B ar virsotni G. Mēs cenšamies izvairīties no krustojumiem, tāpēc mums ir jānovelk horda tā, lai tā krustotos ar AF.  Tas nozīmē, ka mums ir jāiziet ārpus apļa.
+
+\illustration{0.5}{circle_chord_method-6}{Hordas ir pievienotas virsotnei B}
+
+Turpinam šo procesu citām virsotnēm.
+
+\illustration{0.5}{circle_chord_method-7}{Visas hordas ir pievienotas}
+
+\textbf{4. darbība.} Tā kā mēs varējām uzzīmēt visas hordas bez krustojumiem (vienalga, apļa iekšpusē vai ārpusē), tad grafiks ir planārs un mēs ieguvām attiecīgo plakano grafu.
 
 \subsection{Eilera teorēma}
 
-\textbf{T.} Eilera teorēma par plakaniem grafiem - Ja G ir sakarīgs un plakans grafs ar p virsotnēm, q šķautnēm un r skaldnēm, tad p − q + r = 2.
-p - virsotņu skaits, q - šķautņu skaits, r - skaldņu skaits
-\textbf{S. } Jebkurā sakarīgā plakanā grafā izpildās p − q + r − s = 1.  p - virsotņu skaits, q - šķautņu skaits, r - skaldņu skaits, s - sakarīgo komponenšu skaits
+\textbf{T.} Eilera teorēma par plakaniem grafiem - Ja G ir sakarīgs un plakans grafs ar p virsotnēm, $q$ šķautnēm un r skaldnēm, tad $p − q + r = 2$.  p - virsotņu skaits, q - šķautņu skaits, r - skaldņu skaits.\index{Eilera teorēma}\index{Plakani grafi!teorēmas}
 
-\textbf{T.}  Ja G ir maksimāls plakans grafs ar p ≥ 3 virsotnēm un m šķautnēm, tad q = 3p − 6.  p - virsotņu skaits, q - šķautņu skaits
-\textbf{S. } Ja grafs G ir sakarīgs plakans grafs ar p ≥ 3 virsotnēm un q šķautnēm, tad q ≤ 3p − 6.  p - virsotņu skaits, q - šķautņu skaits
+\textbf{S. } Jebkurā sakarīgā plakanā grafā izpildās $p − q + r − s = 1$.  p - virsotņu skaits, q - šķautņu skaits, r - skaldņu skaits, s - sakarīgo komponenšu skaits.
 
-Tomēr arī neplanāri grafi var apmierināt šīs sakarības.  Ja neizpildās ⇒ nav plakans; Ja izpildās ⇒ vēl nevar droši secināt, ka ir plakans. L.  Ja G ir plakans sakarīgs grafs ar p virsotnēm un q šķautnēm un bez trīsstūru skaldnēm, tad q ≤ 2p − 4
+\textbf{T.}  Ja G ir maksimāls plakans grafs ar $p \ge 3$ virsotnēm un m šķautnēm, tad $q = 3p − 6$.  $p$ - virsotņu skaits, q - šķautņu skaits
+
+\textbf{S. } Ja grafs G ir sakarīgs plakans grafs ar $p \ge 3$ virsotnēm un q šķautnēm, tad $q \le 3p − 6$.  p - virsotņu skaits, q - šķautņu skaits
+
+Tomēr arī neplanāri grafi var apmierināt šīs sakarības.  Ja neizpildās $\Rightarrow$ nav plakans; Ja izpildās $\Rightarrow$ vēl nevar droši secināt, ka ir plakans. L.  Ja G ir plakans sakarīgs grafs ar p virsotnēm un q šķautnēm un bez trīsstūru skaldnēm, tad $q \le 2p − 4$
 
 \subsection{Planāru grafu atpazīšana}
 
 Kā atpazīt neplanārus grafus?
 Šie 3 apgalvojumi ir ekvivalenti:
-Grafs ir planārs
-Grafs nesatur K5 vai K33 kā konfigurāciju
-Grafs nesatur K5 vai K33 kā minoru
+\begin{itemize}
+	\item Grafs ir planārs
+	\item Grafs nesatur $K_5$ vai $K_{33}$ kā konfigurāciju
+	\item Grafs nesatur $K_5$ vai $K_{33}$ kā minoru
+\end{itemize}
 
-Teiksim, ka grafs G ir reducējams uz grafu G', ja tas sakrīt ar G' vai arī G' var iegūt no G veicot vienu vai vairākas reizes patvaļīgā secībā šādas redukcijas procedūras: no grafa izmet vienu (jebkuru) šķautni, atstājot galavirsotnes no grafa izmet jebkuru virsotni un tai incidentās škautnes ja x u y v z ir divu šķautņu ceļš grafā un virsotnei y ir pakāpe 2, bet x = 6 z, tad abas šķautnes u un v un to kopīgo virsotni izņem, bet vietā ielik jaunu šķautni ar gala virsotnēm x un z.  Piezīme. Izmantojot pirmos divus punktus, jebkuru grafu var reducēt uz vienu virsotni.
+Teiksim, ka grafs G ir reducējams uz grafu G', ja tas sakrīt ar G' vai arī G' var iegūt no G veicot vienu vai vairākas reizes patvaļīgā secībā šādas redukcijas procedūras: no grafa izmet vienu (jebkuru) šķautni, atstājot galavirsotnes no grafa izmet jebkuru virsotni un tai incidentās škautnes ja x u y v z ir divu šķautņu ceļš grafā un virsotnei y ir pakāpe 2, bet $x \ne z$, tad abas šķautnes u un v un to kopīgo virsotni izņem, bet vietā ielik jaunu šķautni ar gala virsotnēm x un z.\index{planāru grafu atpazīšana}
+
+\textbf{Piezīme.} Izmantojot pirmos divus punktus, jebkuru grafu var reducēt uz vienu virsotni.
 
 \subsection{Kuratovska un Pontrjagina teorēma}
 
-\textbf{T.}  Grafs nav planārs ⇔ to var reducēt uz K5 vai K33 Iepriekš esam pierādījuši, ka K5 vai K33 nav planāri.  Redukcijas ceļā neplanāru grafu var iegūt tikai no neplanāra grafa.
-\textbf{S. } Grafs ir planārs ⇔ ja to nevar reducēt ne uz K5 , ne K33
+\textbf{T.}  Grafs nav planārs $\Leftrightarrow$ to var reducēt uz $K_5$ vai $K_{33}$ Iepriekš esam pierādījuši, ka $K_5$ vai $K_{33}$ nav planāri.  Redukcijas ceļā neplanāru grafu var iegūt tikai no neplanāra grafa.\index{planāru grafu atpazīšanas teorēmas}
 
-\textbf{Kuratovska T.} Grafs G ir planārs ⇔ ja tas neveido ne K5 , ne K33 daļgrafu, nedz arī tiem līdzīgus (homomorfus) grafus
+\textbf{S. } Grafs ir planārs $\Leftrightarrow$ ja to nevar reducēt ne uz $K_5$ , ne $K_{33}$
 
-\textbf{Def.}  Plakanam grafam var piekārtot duālo grafu, kurā skaldnes=virsotnes un robežškautnes=šķautnes (t.i., šķautnes saglabājas).
+\textbf{Kuratovska T.} Grafs G ir planārs $1$ ja tas neveido ne $K_5$ , ne $K_{33}$ daļgrafu, nedz arī tiem līdzīgus (homomorfus) grafus
+
+\textbf{Def.}  Plakanam grafam var piekārtot duālo grafu, kurā skaldnes=virsotnes un robežškautnes=šķautnes (t.i., šķautnes saglabājas).\index{duālais grafs}
 
 \subsection{Konfigurācija}
-\textbf{Def.} Grafu ir iespējams pārveidot, pievienojot virsotnes šķautņu vidū.  Rezultātā tiek iegūts grafs, kas vairs nav, piem., K33 , un neietver K33 kā apakšgrafu, tomēr tas joprojām ir neplanārs.  Pievienojot neplanāram grafam virsotnes nevar iegūt planāru grafu.
 
-\textbf{Def.}  Elementāra konfigurācija tiek iegūta grafam G noņemot šķautni e=uv un pievienojot jaunu virsotni w un divas šķautnes uw un vw.  Grafa konfigurācija ir grafs, kas iegūts no G secīgi veicot 0 vai vairākas elementāras konfigurācijas.
+\textbf{Def.} Grafu ir iespējams pārveidot, pievienojot virsotnes šķautņu vidū.  Rezultātā tiek iegūts grafs, kas vairs nav, piem., $K_{33}$ , un neietver $K_{33}$ kā apakšgrafu, tomēr tas joprojām ir neplanārs.  Pievienojot neplanāram grafam virsotnes nevar iegūt planāru grafu.\index{konfigurācija}
 
-\subsubsection{K33 konfigurācija}
-\textbf{T.}  Jebkura grafa G konfigurācija H ir planāra ⇔ G ir planārs (Šķautņu sadalīšana nemaina planaritāti.)
+\textbf{Def.}  Elementāra konfigurācija tiek iegūta grafam G noņemot šķautni e=uv un pievienojot jaunu virsotni w un divas šķautnes uw un $vw$.  Grafa konfigurācija ir grafs, kas iegūts no G secīgi veicot 0 vai vairākas elementāras konfigurācijas.
 
-\textbf{Def.}  Saka, ka grafs ir K33 konfigurācija, ja tas var tikt iegūts no K33 ,
-pievienojot virsotnes šķautņu vidū.
+\subsubsection{$K_{33}$ konfigurācija}
 
-\textbf{Def.}  Saka, ka grafs iir K5 konfigurācija, ja tas var tikt iegūts no K5 , pievienojot
-virsotnes šķautņu vidū.
+\textbf{T.}  Jebkura grafa G konfigurācija H ir planāra $1$ G ir planārs (Šķautņu sadalīšana nemaina planaritāti.)\index{$K_{33}$ konfigurācija}
 
-K5 pievienotas virsotnes ar šķautnēm. K5 ir izveidotā grafa apakšgrafs. K5 šķautnes sadalītas ar jaunām virsotnēm. K5 nav apakšgrafs, bet nav arī planārs. Ja izņemtu jaunas virsotnes, tad arī nav planārs.
+\textbf{Def.}  Saka, ka grafs ir $K_{33}$ konfigurācija, ja tas var tikt iegūts no $K_{33}$, pievienojot virsotnes šķautņu vidū.
 
-\textbf{Kuratovska T.} Grafs G ir planārs ⇔ ja tas nesatur K5 vai K33 konfigurāciju
+\textbf{Def.}  Saka, ka grafs ir $K_5$ konfigurācija, ja tas var tikt iegūts no $K_5$ , pievienojot virsotnes šķautņu vidū.\index{$K_{33}$ konfigurācija}
 
-\subsection{Grafu defucēšana}
+$K_5$ pievienotas virsotnes ar šķautnēm. $K_5$ ir izveidotā grafa apakšgrafs. $K_5$ šķautnes sadalītas ar jaunām virsotnēm. $K_5$ nav apakšgrafs, bet nav arī planārs. Ja izņemtu jaunas virsotnes, tad arī nav planārs.
 
-Škautņu savilkšana:
-1 šķautņu dzēšana G \ e
-2 šķautņu savilkšana - abas šķautnes galavirsotnes savelk kopā (šķautnes e gala virsotnes u un v izņem un aizvieto ar w, w ir incidenta ar visām u un v blakusvirsotnēm) (multigrafs, parasts grafs)
+\textbf{Kuratovska T.} Grafs G ir planārs $1$ ja tas nesatur $K_5$ vai $K_{33}$ konfigurāciju
+
+\subsection{Grafu reducēšana (minors)}
+
+Reducēšanas operācijas:
+\begin{itemize}
+	\item Šķautņu dzēšana $E \backslash \{e\}$
+	\item Virsotņu dzēšana $V \backslash \{v\}$
+	\item Šķautņu savilkšana - abas šķautnes galavirsotnes savelk kopā (šķautnes e gala virsotnes u un v izņem un aizvieto ar w, w ir incidenta ar visām u un v blakusvirsotnēm) (multigrafs, parasts grafs). Citiem vārdiem, šķautnes džēšana ar ar virsotņu saplūšanu.
+\end{itemize}\index{grafu reducēšana}\index{minors}
 
 \textbf{Def.}  Grafs H ir grafa G minors, ja to var iegūt no G veicot šādas redukcijas: dzēš šķautni savelk šķautni dzēš izolētas virsotnes (Grafs G ir pats sev minors, pielietojot 0 redukcijas)
 
 \subsection{Vāgnera teorēma}
 
-Vāgnera teorēma (Wagner's theorem) - Katrs grafs, kas ir izomorfs G minoram, arī ir G minors.
-\textbf{Def.}  Grafs G satur grafu H kā minoru, ja G satur apakšgrafu G', ko var savilkt uz H.
-Vāgnera \textbf{T. } Grafs G ir planārs ⇔ tam nav K5 vai K33 minora (G nesatur K5 vai K33 kā minoru)
+Vāgnera teorēma (Wagner's theorem) - Katrs grafs, kas ir izomorfs G minoram, arī ir G minors.\index{minoru izomorfizma teorēma}
 
-Kuratovska \textbf{T. }vs Vāgnera \textbf{T. }Kāda saistība starp abām teorēmām? G minoru ne vienmēr var pārveidot G konfigurācijā. Ja G satur ≥ 1 K5 vai K33 kā minoru, tad tas satur ≥ 1 K5 vai K33 kā konfigurāciju.
+\textbf{Def.}  Grafs G satur grafu H kā minoru, ja G satur apakšgrafu G', ko var savilkt uz H.
+
+Vāgnera \textbf{T. } Grafs G ir planārs $1$ tam nav vai $K_{33}$ minora (G nesatur $K_5$ vai $K_{33}$ kā minoru)\index{planāri grafi!minori}
+
+\subsection{Kuratovska \textbf{T. } vs Vāgnera \textbf{T. }}
+Kāda saistība starp abām teorēmām?
+G minoru ne vienmēr var pārveidot G konfigurācijā. Ja G satur $\ge$ 1 $K_5$ vai $K_{33}$ kā minoru, tad tas satur $\ge$ 1 $K_5$ vai $K_{33}$ kā konfigurāciju.
 
 \section{Grafu krāsošana}
 
-\textbf{Def.}  Pareizi nokrāsots grafs - piešķirt grafa virsotnēm krāsas tā, lai incidentām virsotnēm būtu atšķirīgas krāsas.  Hromatiskais skaitlis χ ir mazākais skaits krāsu, ar ko var pareizi nokrāsot grafu.  k-krāsojums - grafs G ir nokrāsots k krāsās. Ja ir nokrāsots ⇒ grafs G ir k-nokrāsojams, χ = k, grafs G ir k-hromatisks.
+\textbf{Def.}  Pareizi nokrāsots grafs - piešķirt grafa virsotnēm krāsas tā, lai incidentām virsotnēm būtu atšķirīgas krāsas.  Hromatiskais skaitlis $\chi $ ir mazākais skaits krāsu, ar ko var pareizi nokrāsot grafu.  k-krāsojums - grafs G ir nokrāsots k krāsās. Ja ir nokrāsots ⇒ grafs G ir k-nokrāsojams, $\chi = k$, grafs G ir k-hromatisks.\index{pareizs nokrāsojums}\index{hromatiskais skaitlis}
 
-\textbf{Def.}  Dots grafs G = (V , E ) K-krāsojums sadala virsotņu kopu V k kopās V1 , V2 , ...Vk , kur katra kopa Vi ir neatkarīgu virsotņu kopa (neviena no virsotnēm nav savā starpā incidentas).  V = V1 u V2 u ... u Vk Vi ∩ Vj = ∅ visiem i 6= j
-Neatkarīgās kopas V1 , V2 , ...Vk sauc par krāsu klasēm.
+\textbf{Def.}  Dots grafs $G = (V , E )$ K-krāsojums sadala virsotņu kopu $V$ kopās $V_1  , V_2 , ...V_k$, kur katra kopa $V_i$ neatkarīgu virsotņu kopu (neviena no virsotnēm nav savā starpā incidentas).  $V = V_1 u V_2 \cup \ldots \cup V_k$; $V_i \cap V_j = \empty$ visiem $i \ne j$; Neatkarīgās kopas $V_1 , V_2 , \ldots V_k$ sauc par krāsu klasēm.\index{k-krāsojums}
 
-Ar cik krāsām var nokrāsot dotu grafu?  Grafam ar ≤ 15 virsotnēm parasti nav grūti atrast hromatisko skaitli.  Lai pārbaudītu, ka grafa hromatiskias skaitlis ir k, ir jāpārbauda arī, ka grafs nevar tikt nokrāsots k − 1 krāsās.  Mērķis parādīt, ka jebkurš k − 1 krāsojums noved pie tā, ka divas incidentas virsotnes ir vienā krāsā.
+Ar cik krāsām var nokrāsot dotu grafu?  Grafam ar $\le$ 15 virsotnēm parasti nav grūti atrast hromatisko skaitli.  Lai pārbaudītu, ka grafa hromatiskias skaitlis ir k, ir jāpārbauda arī, ka grafs nevar tikt nokrāsots k − 1 krāsās.  Mērķis parādīt, ka jebkurš k − 1 krāsojums noved pie tā, ka divas incidentas virsotnes ir vienā krāsā.
  
 \subsection{Daži fakti}
-Ja G ir n virsotnes,;
-tad χ(G ) ≤ n;
-χ(G ) = 1 ⇔ G ir tukšs grafs;
-χ(Kn ) = n ⇒ G ir pilns grafs;
-Cikls ar pāra šķautnēm χ(C2n ) = 2;
-Cikls ar nepāra šķautnēm χ(C2n=1) = 3;
-Rats ar pāra zariem χ = 3;
-Rats ar nepāra zariem χ = 4;
-Ja H ir apakšgrafs χ(G ) ≥ χ(H).
+\begin{itemize}
+	\item Ja G ir n virsotnes,;
+	\item tad $\chi(G ) \le n$;
+	\item $\chi(G ) = 1 \Leftrightarrow G$ ir tukšs grafs;
+	\item $\chi(Kn_2 ) = n ⇒ G$ ir pilns grafs;
+	\item Cikls ar pāra šķautnēm $\chi(C_{2n} ) = 2$;
+	\item Cikls ar nepāra šķautnēm $\chi(C_{2n=1}) = 3$;
+	\item Rats ar pāra zariem $\chi = 3$;
+	\item Rats ar nepāra zariem $\chi = 4$;
+	\item Ja H ir apakšgrafs $\chi(G ) \ge \chi(H)$.
+\end{itemize} \index{hromatiskais skaitlis!fakti}
 
 \subsection{2-hromatiski grafi}
 Fakts: Katrs grafs-koks ar vismaz 2 virsotnēm ir 2-hromatisks.
-\textbf{T. }Grafa G hromatiskais skaitlis χ(G ) ir 2 ⇔ G ir divdaļīgs.
-\textbf{T. }Grafa G hromatiskais skaitlis χ(G ) ir 2 ⇔ G ir divdaļīgs.
+\textbf{T. }Grafa G hromatiskais skaitlis $\chi(G )$ ir $2 ⇔ G$ ir divdaļīgs.
+\textbf{T. }Grafa G hromatiskais skaitlis $\chi(G )$ ir $2 ⇔ G$ ir divdaļīgs.\index{hromatikskais skaitlis!fakti}
  
 \subsection{Hromatiskā skaitļa augšājā robeza}
-\textbf{T. } Katru grafu var nokrāsot ar d + 1 krāsām, kur d ir grafa maksimālā pakāpe, χ(G ) ≤ 4(G ) + 1.
+\textbf{T. } Katru grafu var nokrāsot ar $d + 1$ krāsām, kur $d$ ir grafa maksimālā pakāpe, $\chi(G ) \le 4(G ) + 1$.\index{hromatiskais skaitlis! maksimālā pakāpe}
 
 \subsection{Planāru grafu krāsojums - Eilera formula}
 
-Planārā grafā q ≤ 3p − 6, p ≥ 3, q - šķautņu sk., p - virsotņu sk.
-\textbf{S. }(min pakāpe planārā grafā). Planārā grafā ir virsotne v, kam dv ≤ 5.
+\textbf{T.} Planārā grafā $q \le 3p − 6$, $p \ge 3$, q - šķautņu sk., p - virsotņu sk.
+
+\textbf{S. }(min pakāpe planārā grafā). Planārā grafā ir virsotne v, kam $dv \le 5$.
 6 krāsu \textbf{T. }Jebkuru planāru grafu var pareizi nokrāsot ar 6 krāsām.
-5 krāsu \textbf{T. }Ja grafs ir planārs, sakarīgs un vienkāršs, tad χ(G ) ≤ 5.
+5 krāsu \textbf{T. }Ja grafs ir planārs, sakarīgs un vienkāršs, tad $\chi(G ) \le 5$.
 
 \section{Eilera ķēdes un cikli}
 
 \textbf{Def.} Ķēde - maršruts, kurā nav šķautnes, kas atkārtotos
-noslēgts maršruts - sākuma un beigu virsotnes sakrīt (x0 = xl )
+noslēgts maršruts - sākuma un beigu virsotnes sakrīt ($x_0 = x_l$ )
 cikls - noslēgta, netukša ķēde
 elementāra/vienkārša ķēde - nav virsotnes, kas atkārtojas, izņemot
 varbūt gala un sākuma virsotni
 
 \textbf{Def.}  Eilera ķēde grafā ir jebkurš maršruts, kas satur visas grafa šķautnes.
 Ja tāds maršruts ir cikls, tad to sauc par Eilera ciklu. (Satur katru grafa šķautni tieši 1 reizi) Grafu, kurā eksistē vismaz viens Eilera cikls sauc par Eilera grafu.
-\textbf{T. } Ja grafā ir virsotne v ar nepāra pakāpi dv , tad tajā nav noslēgta Eilera maršruta (Eilera cikla).
+\textbf{T. } Ja grafā ir virsotne v ar nepāra pakāpi $dv$ , tad tajā nav noslēgta Eilera maršruta (Eilera cikla).
 
 \subsection{Eilera cikls. Algoritms.}
 \textbf{Kā grafā konstruēt Eilera ciklu?}
 
-Algoritms 1:
+Algoritms:
 \begin{itemize}
 	\item Veido maršrutu no brīvi izvēlētas virsotnes katrā solī ejot pa šķautni, pa kuru iepriekš nav iets, līdz tas vairs nav iespējam
 	\item (Veidojas maršruts M0 )
-	\item Aplūko grafu, kas sastāv no atlikušajām šķautnēm. (Komponentes G1 , G2 utt.)
-	\item Katrai komponentei izveijo Eilera maršrutu (G1 → M1 , G2 → M2 utt.)
-	\item Ievieto M1 , M2 utt. maršrutā M0
+	\item Aplūko grafu, kas sastāv no atlikušajām šķautnēm. (Komponentes $G_1$ , $G_2$ utt.)
+	\item Katrai komponentei izveijo Eilera maršrutu ($G_1 → M_1$ , $G_2 → M_2 $ utt.)
+	\item Ievieto $M_1$ , $M_2$ utt. maršrutā M0
 	\item Algoritms vienmēr atrod noslēgtu Eilera maršrutu (Eilera ciklu), ja tāds eksistē.
 \end{itemize}
-	
-Veido maršruru katrā solī ejot pa šķautni, pa kuru nav iets. Veidojas maršruts M0 .
-M0 : c → d → e → f → g → m → l → k → j → c Aplūko grafu, kas sastāv no atlikušajām šķautnēm. Komponentes G1 , G2 .  Katrai komponentei izveido Eilera maršrutu (G1 → M1 , G2 → M2 ).  Ievieto M1 , M2 maršrutā M0 .  M0 : c → d → ...M1 ... → d → e → f → g → ...M2 ... → g → m → l → k → j → c
 
-[TK]
+\illustration{1}{Euler_cycle_build-1}{Piemērs}
 
 \subsection{Eilera grafs}
 
-\textbf{T. } Grafs bez izolētām virsotnēm ir Eilera grafs ⇔ šis grafs ir sakarīgs un katrai tā virsotnei ir pāra pakāpe.
-\textbf{T. } Ja grafā ir nenoslēgts Eilera maršruts, tad visām virsotnēm, izņemot sākuma un beigu, pakāpe dv ir pāra.
-\textbf{T. } Grafā eksistē nenoslēgta Eilera ķēde ⇔ grafs ir sakarīgs un ar ≤ 2 virsotnēm ar nepāra pakāpi.
+\textbf{T. } Grafs bez izolētām virsotnēm ir Eilera grafs $\Leftrightarrow $ šis grafs ir sakarīgs un katrai tā virsotnei ir pāra pakāpe.
+
+\textbf{T. } Ja grafā ir nenoslēgts Eilera maršruts, tad visām virsotnēm, izņemot sākuma un beigu, pakāpe $dv$ ir pāra.
+
+\textbf{T. } Grafā eksistē nenoslēgta Eilera ķēde $⇔$ grafs ir sakarīgs un a $r \le 2$ virsotnēm ar nepāra pakāpi.
 
 \subsubsection{Grafa sadalīšana}
 
-Grafu sadala tā, ka katrā izdalītajā apakšgrafā ir atšķirīgas šķautnes Aplūko grafu G Var atrast divus 3 šķautņu ciklus Nav noteikti jābūt cikliem vai vienādām daļām
-F = F1 , F2 , E (F1 ) u E (F2 ) = E (G )
+Grafu sadala tā, ka katrā izdalītajā apakšgrafā ir atšķirīgas šķautnes Aplūko grafu G Var atrast divus 3 šķautņu ciklus Nav noteikti jābūt cikliem vai vienādām daļām $F = F1 , F2 , E (F1 ) \cup E (F2 ) = E (G )$
 
-\textbf{Def.}  Grafa sadalījums ir saime F ar apakšgrafiem F1 , F2 ...Fn , kas sastāv no atšķirīgām šķautnēm tā, ka uE (F ) = E (G ).  Ja katrs apakšgrafs saimē F ir cikls, tad sadalījumu sauc par cilku sadalījumu. Ja katrs apakšgrafs saimē F ir ceļš, tad sadalījumu sauc par ceļu sadalījumu.  nevar sadalīt ciklos, bet var izveidot ceļu sadalījumu viena šķautne-triviāls ceļš
+\textbf{Def.}  Grafa sadalījums ir saime F ar apakšgrafiem $F1 , F2 ...Fn$ , kas sastāv no atšķirīgām šķautnēm tā, ka $uE (F ) = E (G )$.  Ja katrs apakšgrafs saimē $F$ ir cikls, tad sadalījumu sauc par cilku sadalījumu. Ja katrs apakšgrafs saimē $F$ ir ceļš, tad sadalījumu sauc par ceļu sadalījumu.  nevar sadalīt ciklos, bet var izveidot ceļu sadalījumu viena šķautne-triviāls ceļš
+
 \textbf{Def.}  Pāra grafs - visām virsotnēm ir pāra pakāpe
-\textbf{T. } Grafa G šķautnes var sadalīt cikla sadalījumā ⇔ grafs G ir pāra grafs
-\textbf{T. } Eilera grafs ⇔ pāra grafs ⇔ cilku sadalījums
+
+\textbf{T. } Grafa $G$ šķautnes var sadalīt cikla sadalījumā $\Leftrightarrow$ grafs $G$ ir pāra grafs
+
+\textbf{T. } Eilera grafs $\Leftrightarrow$ pāra grafs $⇔$ cilku sadalījums
 
 \section{Hamiltona grafs}
 
@@ -381,13 +532,17 @@ Likumi, kam jāizpildās, konstruējot Hamiltona ciklu
 	
 \subsection{Teorēmas}
 
-\textbf{T. }Dīraka teorēma. Ja grafā no katras virsotnes iziet n/2 škaunes ≥ tajā ir Hamiltona ceļš.
+\textbf{T. }Dīraka teorēma. Ja grafā no katras virsotnes iziet $\ge \frac{n}{2}$ škautnes tajā ir Hamiltona ceļš.
 
-\textbf{T. }Grīnberga teorēma.  (Var tikt izmantota, lai pierādītu, ka daži planāri grafi nesatur Hamiltona ciklu) Pieņem, ka planāram grafam G ir Hamiltona cikls. Grafu G uzzīmē jebkurā plakanā izkārtojumā.  ri - skaldņu skaits Hamiltona ciklā, ko ierobežo i šķautnes.  ri0 - skaldņu skaits ārpus Hamiltona cikla, ko ierobežo i šķautnes. 
-Tad izpildās: (i − 2)(ri − ri0 ) = 0
+\textbf{T. }Grīnberga teorēma.  (Var tikt izmantota, lai pierādītu, ka daži planāri grafi nesatur Hamiltona ciklu) Pieņem, ka planāram grafam G ir Hamiltona cikls. Grafu G uzzīmē jebkurā plakanā izkārtojumā.  $r_i$ - skaldņu skaits Hamiltona ciklā, ko ierobežo i šķautnes.  $r'_i$ - skaldņu skaits ārpus Hamiltona cikla, ko ierobežo i šķautnes. 
+Tad izpildās:
+\begin{equation}
+	\sum_{i}{}(i − 2)(r_i − r'_i ) = 0
+\end{equation}
 
 \subsection{Turnīrs}
-\textbf{Def.}  Turnīrs ir orientēts grafs, kurā starp katrām 2 virsotnēm ir tieši viena šķautne. Pilns grafs ar n virsotnēm Kn katra šķautne orientēta vienā virzienā virsotnes - komandas, šķautne uv - v uzvar u katrā šādā grafā ir orientēts ceļš (v1 v2 )...(vn−1 vn ), kas ietver visas virsotnes.
+
+\textbf{Def.}  Turnīrs ir orientēts grafs, kurā starp katrām 2 virsotnēm ir tieši viena šķautne. Pilns grafs ar n virsotnēm $K_n$ katra šķautne orientēta vienā virzienā virsotnes - komandas, šķautne uv - v uzvar u katrā šādā grafā ir orientēts ceļš $(v_1 v_2 )...(v_{n−1} v_n )$, kas ietver visas virsotnes.
 
 \textbf{T. } Katrā turnīrā ir Hamiltona ceļš.
 
@@ -401,9 +556,9 @@ Standarta veids, kā zīmēt koku ar sakni, ir novietojot sakni augšā un a
 
 \textbf{Def.}  Lapa - virsotne kokā ar pakāpi 1.  Mežš - grafs bez cikliem, ne obligāti sakarīgs (komponentes ir koki).
 
-\textbf{Def.}  Ja p ir i līmeņa virsotne, c ir i + 1 līmeņa virsotne un pc ir šķautne, tad c ir p bērns; p ir c vecāks.  Ja ir virsotņu virkne v0 = p1 , v1 , ..., vk = d, kur v1 ir v0 bērns, v2 ir v1 bērns, ..., vk ir vk −1 bērns, tad d ir p pēctecis.
+\textbf{Def.}  Ja p ir i līmeņa virsotne, c ir $i + 1$ līmeņa virsotne un $pc$ ir šķautne, tad c ir p bērns; p ir c vecāks.  Ja ir virsotņu virkne $v_0 = p1 , v_1 , ..., v_k = d$, kur $v_1$ ir $v_0$ bērns, $v_2$ ir $v_1$ bērns, ..., $v_k$ ir $v_k −1$ bērns, tad d ir p pēctecis.
 
-\textbf{Def.}  Šādi apgalvojumi ir ekvivalenti: (A) T ir koks; (B) T starp katrām 2 virsotnēm ir tieši viens ceļš; (C) T ir sakarīgs grafs, no kura izmetot jebkuru šķautni, T kļūst nesakarīgs Pierādījums (A ⇔ B)
+\textbf{Def.}  Šādi apgalvojumi ir ekvivalenti: (A) T ir koks; (B) T starp katrām 2 virsotnēm ir tieši viens ceļš; (C) T ir sakarīgs grafs, no kura izmetot jebkuru šķautni, T kļūst nesakarīgs 
 
 
 \textbf{Def.}  Lapas ir koka virsotnes ar pakāpi 1, tās ir virsotnes bez bērniem.  Virsotnes ar bērniem ir iekšējās virsotnes.  Ja katrai iekšējai virsotnei ir 2 bērni, tad tas ir binārs koks.  Ja katrai iekšējai virsotnei ir m bērni, tad tas ir m-ārs koks.
@@ -412,40 +567,40 @@ Standarta veids, kā zīmēt koku ar sakni, ir novietojot sakni augšā un a
 
 \subsection{Teorēmas}
 
-\textbf{T. } T ir koks ⇔ T ir grafs bez cikliem, kurā pievienojot šķautni starp jebkurām divām
+\textbf{T. } T ir koks $⇔$ T ir grafs bez cikliem, kurā pievienojot šķautni starp jebkurām divām
 nesavienotām virsotnēm rodas cikls
 
-\textbf{S. } Katrā kokā ir ≥ 2 lapas, n ≥ 2.
+\textbf{S. } Katrā kokā ir $\ge 2$ lapas, $n \ge 2$.
 
 \textbf{T. } Kokā ar n virsotnēm ir n-1 šķautne.
 
 \textbf{T. } Mežā ar n virsotnēm un k komponentēm ir n-k šķautnes.
 
-\textbf{T. } T ir koks ⇔ T ir sakarīgs grafs ar n virsotnēm un n-1 šķautnēm.
+\textbf{T. } T ir koks $⇔$ T ir sakarīgs grafs ar n virsotnēm un n-1 šķautnēm.
 
-\textbf{T. } Ja T ir m-ārs koks ar n virsotnēm, no kurām i ir iekšējās virsotnes, tad n = mi + 1.
+\textbf{T. } Ja T ir m-ārs koks ar n virsotnēm, no kurām i ir iekšējās virsotnes, tad $n = mi + 1$.
 
 \textbf{S. } Ja T ir m-ārs koks ar n virsotnēm, i iekšējām virsotnēm un l lapām, tad zinot vienu no vērtībām (i, n vai l) abas pārējās attiecīgi var aprēķināt:
-i : l = (m − 1)i + 1, n = mi + 1
-l : i = (l − 1)/(m − 1), n = (ml − 1)/(m − 1)
-n : i = (n − 1)/m, l = [(m − 1)n + 1]/m
-
+$i : l = (m − 1)i + 1, n = mi + 1$
+$l : i = (l − 1)/(m − 1), n = (ml − 1)/(m − 1)$
+$n : i = (n − 1)/m, l = [(m − 1)n + 1]/m$
 
 %fix
-\textbf{T. } Ja T ir m-ārs koks ar augstumu h un l lapām, tad: a) l ≤ mh un ja visas lapas ir augstumā h, l = mh; b) h ≥ dlogm le un ja koks ir līdzsvarā, h = dlogm le dr e noapaļo r uz nākošo lielāko veselo skaitli
+\textbf{T. } Ja T ir m-ārs koks ar augstumu h un l lapām, tad: a) $l \le mh$ un ja visas lapas ir augstumā h, $l = mh$; b) $h \ge \lceil \log{n}l \rceil$ un ja koks ir līdzsvarā, $h =\lceil \log{n}l \rceil$
+$\lceil r \rceil$ noapaļo r uz nākošo lielāko veselo skaitli
+
 \textbf{T. } Kokā ar n virsotnēm ir n-1 šķautne.
-\textbf{S. } Katrā kokā ir ≥ 2 lapas, n ≥ 2.
+
+\textbf{S. } Katrā kokā ir $\ge 2$ lapas, $n \ge 2$.
 
 \subsection{Prūfera virkne}
 
-Koka virsotnes numurē. Katram kokam ar n numuriem izveido virkni a1 , a2 , ...an−2 ar garumu n − 2 sekojoša veidā: izvēlas l1 lapu ar mazāko numuru un ar a1 apzīmē blakusvirsotni; izdzēš l1 no koka un atkārto iepriekšējo punktu; apstājas, kad atlikušais koks ir reducēts uz 2 lapām, kas savienotas ar šķautni izveidojas virkne. \textbf{To }sauc par Prufera kodu/virkni (Prüfer sequence).  Tālāk var parādīt, ka katra šāda (n − 2) garuma virkne no n numuriem definē unikālu n numurētu koku: apvērš procedūru: var novērot, ka lapas (virsotnes ar pakāpi 1) nekad neparādās virknē pirmais numurs virknē ir kaimiņš lapai ar mazāko numuru mazākā numura lapa ir mazākais numurs, kas neparādās virknē, aplūkojot visu virsotņu numuru sarakstu atbilstoši ievieto tabulā li un tālāk vairs neaplūko atkārto procedūru palikušajām (n − 1) virsotnēm numurētajā kokā atbilstoši palikušajai (n − 3) virknei utt.
+Koka virsotnes numurē. Katram kokam ar n numuriem izveido virkni $a_1 , a_2 ,...,a_{n−2}$ ar garumu n − 2 sekojoša veidā: izvēlas $l_1$ lapu ar mazāko numuru un ar $a_1$ apzīmē blakusvirsotni; izdzēš $l_1$ no koka un atkārto iepriekšējo punktu; apstājas, kad atlikušais koks ir reducēts uz 2 lapām, kas savienotas ar šķautni izveidojas virkne. 
+To sauc par Prufera kodu/virkni (Prüfer sequence).  Tālāk var parādīt, ka katra šāda (n − 2) garuma virkne no n numuriem definē unikālu n numurētu koku: apvērš procedūru: var novērot, ka lapas (virsotnes ar pakāpi 1) nekad neparādās virknē pirmais numurs virknē ir kaimiņš lapai ar mazāko numuru mazākā numura lapa ir mazākais numurs, kas neparādās virknē, aplūkojot visu virsotņu numuru sarakstu atbilstoši ievieto tabulā li un tālāk vairs neaplūko atkārto procedūru palikušajām (n − 1) virsotnēm numurētajā kokā atbilstoši palikušajai (n − 3) virknei utt.
 
-%[Insert example]
+\illustration{1}{Prufers_code-1}{Piemērs}
 
-Apgalvojums
-Katra virsotne ar pakāpi ≥ 2 parādās virknē a1 , a2 , ...an−2 .;  Kopā tiek nodzēstas n-2 no n-1 šķautnēm; Tiek nodzēsta ≥ 1 šķautne, kas ietver virsotni v; kad tiek nodzēsta pirmā no šķautnēm, v nav lapa; u ir lapa, li = u, ai = v
-
-
+\textbf{Apgalvojums} Katra virsotne ar pakāpi $\ge 2$ parādās virknē $a1 , a2 , ...a_{n−2}$ .;  Kopā tiek nodzēstas n-2 no n-1 šķautnēm; Tiek nodzēsta $\ge$ 1 šķautne, kas ietver virsotni v; kad tiek nodzēsta pirmā no šķautnēm, v nav lapa; u ir lapa, $li = u$, $ai = v$.
 
 \subsection{Pārklājošais koks}
 
@@ -459,46 +614,54 @@ Daudzu no iepriekš aplūkotām problēmām (izomorfisms, Hamiltona cikls, 
 
 \subsubsection{Meklēšana dziļumā (Depth-first spanning tree DFS)}
 
-Algoritms
-Izvēlas kādu virsotni par sakni un sāk veidot ceļu no saknes, kas sastāv no grafa šķautnēm ‘
-katrā solī mēgina turpināt konstruēt koku no tekošās virsotnes
-ceļš tiek turpināts, kamēr to nevar turpināt neatkārtojot jau kokā esošu virsotni
-virsotne, kur šis ceļš apstājas, ir lapa
-ja nav iespējams turpināt ceļu, tad atkāpjas uz iepriekšējo virsotni, t.i., dodas atpakaļ uz vecāka virsotni y šai lapai un cenšas turpināt ceļu citā virzienā
-kad visi iespējamie ceļi no šī vecāka y un tā citiem bērniem ir izveidoti, tad kāpjas atpakaļ uz konkrētā vecāka y vecāka virsotni utt. līdz nonāk atpakaļ līdz saknei un ir pārbaudīti visi iespējamie ceļi no saknes
+\textbf{Algoritms}
+\begin{itemize}
+	\item Izvēlas kādu virsotni par sakni un sāk veidot ceļu no saknes, kas sastāv no grafa šķautnēm ‘
+	\item katrā solī mēgina turpināt konstruēt koku no tekošās virsotnes
+	\item ceļš tiek turpināts, kamēr to nevar turpināt neatkārtojot jau kokā esošu virsotni
+	\item virsotne, kur šis ceļš apstājas, ir lapa
+	\item ja nav iespējams turpināt ceļu, tad atkāpjas uz iepriekšējo virsotni, t.i., dodas atpakaļ uz vecāka virsotni y šai lapai un cenšas turpināt ceļu citā virzienā
+	\item kad visi iespējamie ceļi no šī vecāka y un tā citiem bērniem ir izveidoti, tad kāpjas atpakaļ uz konkrētā vecāka y vecāka virsotni utt. līdz nonāk atpakaļ līdz saknei un ir pārbaudīti visi iespējamie ceļi no saknes
+\end{itemize}
+
+\illustration{1}{dfs-1}{Piemērs}
 
 \subsubsection{Meklēšana plašumā (Breadth-first spanning tree BFS)}
 
-Algoritms
-Izvēlas kādu virsotni kā sakni, kas ir 0-līmenis un novieto visas izejošās šķautnes 1-līmenī kokā. Sekojoši nākošajā līmenī pievieno šķautnes, kas ir incidentas saknes blakusvirsotnēm, ja vien nav savienota ar kokā jau izmantotu virsotni, utt.
+\textbf{Algoritms}
+\begin{itemize}
+	\item Izvēlas kādu virsotni kā sakni, kas ir 0-līmenis un novieto visas izejošās šķautnes 1-līmenī kokā.
+	\item Sekojoši nākošajā līmenī pievieno šķautnes, kas ir incidentas saknes blakusvirsotnēm, ja vien nav savienota ar kokā jau izmantotu virsotni, utt.
+\end{itemize}
+
+\illustration{1}{bfs-1}{Piemērs}
 
 \subsection{Sakarīgo grafu pārklājošie koki}
 
-Ja grafs nav sakarīgs, tad tam neeksistē pārklājošs koks.  Ja r ir sakne un u ir patvaļīga virsotne, tad ceļš ru, kas ir meklēšanas
-plašumā kokā \textbf{T, }ir īsākais ceļš no r uz u sākotnējā grafā.
-Īsākais ceļš: ru1 , u1 u2 , ..., uk −1 u
-u1 - 1līmenis
-u2 − ≤ 2 līmenis
-...
-uk −1 ≤ k-1 līmenis
-u ≤ k līmenis
-
+Ja grafs nav sakarīgs, tad tam neeksistē pārklājošs koks.
+Ja r ir sakne un u ir patvaļīga virsotne, tad ceļš $ru$, kas ir meklēšanas plašumā kokā T, ir īsākais ceļš no r uz u sākotnējā grafā.
+Īsākais ceļš: $ru1 , u1 u2 , ..., uk −1$ u
+$u1 - 1$ līmenis
+$u2 − \le 2$ līmenis
+$...$
+$uk −1 \le k-1$ līmenis
+$u \le k$ līmenis
 
 \subsection{Pārklājošā koka pielietojumi}
 
 Vai grafs ir sakarīgs? Sākot ar virsotni r (sakni), konstruē pārklājošo koku T (ar DFS vai BFS) ja virsotņu skaits T = virsotņu skaitu G, tad G ir sakarīgs (citādi nē).
 
-Grafa G sadalīšana sakarīgās komponentēs. Kamēr visas virsotnes nav ieliktas kādā komponentē: r - virsotne, kas nav nevienā komponentē K veido koku ar BFS K' - komponente, kas sastāv no visām v ∈ T un uv , u, v ∈ T .
+Grafa G sadalīšana sakarīgās komponentēs. Kamēr visas virsotnes nav ieliktas kādā komponentē: r - virsotne, kas nav nevienā komponentē K veido koku ar BFS K' - komponente, kas sastāv no visām $v \in T$ un uv , u, $v \in T$ .
 
-Vai grafā ir cikls?  Katrai komponentei Ki uzkonstruē pārklājošo koku Ti. Ja ir šķautne uv, u, v ∈ Ki , uv ∈ / Ti, tad ir cikls.
+Vai grafā ir cikls?  Katrai komponentei $K_i$ uzkonstruē pārklājošo koku Ti. Ja ir šķautne uv, u, $v \in K_i$ , $uv \in / Ti$, tad ir cikls.
 
 Vai grafs ir divdaļīgs?  Konstruē pārklājošo koku T ar BFS.
-r ∈ K ⇒ 1.līm. ∈ L ⇒ 2.līm. ∈ K ⇒ 3.līm. ∈ L...
-K = r u (2.līm.) u (4.līm) u ...
+$r \in K $⇒ 1.līm. $\in L$ ⇒ 2.līm. $\in K$ ⇒ 3.līm.$ \in L$...
+$K = r \cup $ (2.līm.) u (4.līm) u ...
 L = (1.līm.) u (3.līm) u ...
-Pārbauda, vai šķautnes uv, u ∈ K , v ∈ L
+Pārbauda, vai šķautnes $uv$,$u \in K , v \in L$ 
 
-Neorientētu grafu var raksturot ar kaimiņmatricu, kas satur |V | = n rindas un kolonnas.  Katrai rindai un kolonnai atbilst viena virsotne.  Rindu un kolonnu secība ir vienāda.  Neorientētam grafam ai j = 1, ja virsotnes vi un vj ir kaimiņvirsotnes, t.i., tās abas in incidentas šķautnei e = [vi , vj ], pretējā gadījumā ai j = 0.  Sakarīguma pārbaude ar kaimiņmatricu.
+Neorientētu grafu var raksturot ar kaimiņmatricu, kas satur $|V | = n$ rindas un kolonnas.  Katrai rindai un kolonnai atbilst viena virsotne.  Rindu un kolonnu secība ir vienāda.  Neorientētam grafam $a_i \, j = 1$, ja virsotnes $K_i$ un $K_j$ ir kaimiņvirsotnes, t.i., tās abas in incidentas šķautnei $e = [v_i , v_j ]$, pretējā gadījumā ai $j = 0$.  Sakarīguma pārbaude ar kaimiņmatricu.
 
 \subsection{Minimālais pārklājošais koks (Minimal Spanning Tree (MST))}
 
@@ -513,10 +676,13 @@ n - virsotņu skaits tīklā
 
 Atkārtot sekojošo soli, kamēr kokā T ir n-1 šķautnes: pievieno T īsāko šķautni, starp virsotni, kas ir kokā T un virsotni, kas nav T (sākotnēji izvēlas jebkuru šķautni ar īsāko garumu).
 
+\illustration{1}{prima-1}{Piemērs}
+
 \subsubsection{Kruskal algoritms}
 
 Atkārtot sekojošo soli, kamēr kopā T ir n-1 šķautnes (sākumā kopa T ir tukša): pievieno T īsāko šķautni, kas neveido cilku ar šķautnēm, kas jau atrodas kopā \textbf{T  }(sākotnēji izvēlas jebkuru šķautni ar īsāko garumu).
 
+\illustration{1}{kruskal-1}{Piemērs}
 
 \textbf{T. } Prima algoritms vienmēr atrod (vienu no) minimālo pārklājošo koku.
 
@@ -529,25 +695,27 @@ Optimizācijas problēmas ir aktuālas gan zinātnē, gan pielietojumos.  N
 
 \subsection{Īsākā ceļa atrašana}
 
-Algoritms salīdzinoši vienkāršai problēmai:
-Atrast īsāko ceļu tīklā no virsotnes u uz virsotni z. Var būt vairāk kā 1 īsākais ceļš
-Viens no veidiem īsākā ceļa atrašanai - izskatīt visus ceļus un noteikt īsāko. Taču tas nav optimāli, jau pie 100 virsotnēm pat skaitļojot datorā - problēmas.
-Ir algoritmi, kas atrisina šo problēmu efektīvi.  Aplūkosim Daikstras algoritmu, kas tīklā atrod īsākos ceļus no dotas virsotnes a uz visām pārējām virsotnēm.
+\textbf{Algoritms salīdzinoši vienkāršai problēmai:}
+\begin{itemize}
+	\item Atrast īsāko ceļu tīklā no virsotnes u uz virsotni z. Var būt vairāk kā 1 īsākais ceļš
+	\item Viens no veidiem īsākā ceļa atrašanai - izskatīt visus ceļus un noteikt īsāko. Taču tas nav optimāli, jau pie 100 virsotnēm pat skaitļojot datorā - problēmas.
+	\item Ir algoritmi, kas atrisina šo problēmu efektīvi.  Aplūkosim Daikstras algoritmu, kas tīklā atrod īsākos ceļus no dotas virsotnes a uz visām pārējām virsotnēm.
+\end{itemize}
 
 \subsubsection{Daikstras algoritms}
-Ar k(e) apzīmē šķautnes e garumu; ar m apzīmē attāluma skaitītāju; lai palielinātu m vērtību, algoritms apzīmē virsotnes, kuru minimālais attālums no virsotnes a ir m; pirmā vērtība virsotnei x būs iepriekšējā virsotne ar īsāko ceļu no a uz x; otrā vērtība virsotnei x būs īsākā ceļa garums no a uz x
+Ar $k(e)$ apzīmē šķautnes e garumu; ar m apzīmē attāluma skaitītāju; lai palielinātu m vērtību, algoritms apzīmē virsotnes, kuru minimālais attālums no virsotnes a ir m; pirmā vērtība virsotnei x būs iepriekšējā virsotne ar īsāko ceļu no a uz x; otrā vērtība virsotnei x būs īsākā ceļa garums no a uz x
 
-\textbf{Procedūra 1}
+\textbf{Procedūra}
 \begin{itemize}
-	\item izvēlas virsotni a un apzīmē ar (−, 0), kur '-' norāda tukšumu un 0 atbilst tam, ka nav šķautne starp virsotnēm;
-	\item pārbauda katru šķautni e = (p, q) no kādas atzīmētas virsotnes p uz kādu neatzīmētu virsotni q. Pieņem, ka p apzīmējums ir [r , d(p)]. Ja d(p) + k(e) = m, virsotni q atzīmē ar (p, m);
-	\item ja visas virsotnes nav vēl apzīmētas, palielina m par 1 un veic otro soli. Citādi iet uz soli 4. Ja ir interse tikai par īsāko ceļu uz z, tad dodas uz 4.soli, tiklīdz z ir atzīmēts;
-	\item katrai virsotnei y īsākais ceļš no a uz y ir garumā d(y), otrā y vērtība. Šādu ceļu var atrast, izsekojot atpakaļ no y, izmantojot pirmo vērtību;
+	\item izvēlas virsotni a un apzīmē ar $(−, 0)$, kur '-' norāda tukšumu un 0 atbilst tam, ka nav šķautne starp virsotnēm
+	\item pārbauda katru šķautni $e = (p, q)$ no kādas atzīmētas virsotnes p uz kādu neatzīmētu virsotni q. Pieņem, ka p apzīmējums ir $[r , d(p)]$. Ja $d(p) + k(e) = m$, virsotni q atzīmē ar $(p, m)$
+	\item ja visas virsotnes nav vēl apzīmētas, palielina m par 1 un veic otro soli. Citādi iet uz soli 4. Ja ir interse tikai par īsāko ceļu uz z, tad dodas uz 4.soli, tiklīdz z ir atzīmēts
+	\item katrai virsotnei y īsākais ceļš no a uz y ir garumā $d(y)$, otrā y vērtība. Šādu ceļu var atrast, izsekojot atpakaļ no y, izmantojot pirmo vērtību;
 \end{itemize}
-	
-%[\textbf{TK }replace]
 
-\textbf{Procedūra 1 (Cits pieraksta veids)}
+\illustration{1}{daikstra-1}{Piemērs}
+
+\textbf{Procedūra (Cits pieraksta veids)}
 
 \begin{itemize}
 	\item Ceļa meklēšanu uzsāk no kādas izvēlētas virsotnes. Sākumā ceļa garums ir 0 un ceļa garums līdz pārējām virsotnēm nav zināms (pieņem, ka liels un apzīmē ar ∞).
@@ -555,16 +723,18 @@ Ar k(e) apzīmē šķautnes e garumu; ar m apzīmē attāluma skaitītāju
 	\item izvēlas kā nākošo aplūkot virsotni, kurai ir mazākā vērtība un atkārto procedūru virsotnēm, kas nav jau kā mazāko izvēlēto virsotņu kopā. Ja ir īsāks attālums līdz jau apzīmetai virsotnei, tad nomaina uz mazāko, citādi atstāj to, kas atrasta iepriekš.
 \end{itemize}
 	
+\illustration{1}{daikstra-2}{Piemērs}
+
 \subsection{Plūsma tīklā}
 
-\textbf{Def.} Plūsma tīklā - orientēts grafs (tīkls), katrai šķautnei uv atbilst caurlaidība c(uv) (piekārtots vesels ne-negatīvs skaitlis) sākuma un beigu virsotne (a un z).
+\textbf{Def.} Plūsma tīklā - orientēts grafs (tīkls), katrai šķautnei $uv$ atbilst caurlaidība $c(uv)$ (piekārtots vesels ne-negatīvs skaitlis) sākuma un beigu virsotne (a un z).
 
 Kādu daudzumu iespējams nosūtīt no a uz z, pa nevienu šķautni, nesūtot vairāk kā $c(uv)$? (interesē maksimalizēt plūsmu).
 
-\textbf{Def.} a-z plūsma $f(x)$ orientētā tīklā ir (vesela) skaitļa funkcija, kas definēta katrai šķautnei, kas kopā ar sākuma un beigu virsotni apmierina nosacījumus:
+\textbf{Def.} $a-z$ plūsma $f(x)$ orientētā tīklā ir (vesela) skaitļa funkcija, kas definēta katrai šķautnei, kas kopā ar sākuma un beigu virsotni apmierina nosacījumus:
 \begin{itemize}
 	\item katrai šķautnei $0 \le f(uv) \le c(uv) $, kur $f(uv)$ ir plūsma caur $uv$ un $c(uv)$ ir $uv$ caurlaidība
-	\item ja $u \ne a$, $u \ne z$, tad $\sum_{v}{f(uv)} = \sum_{v}{f(vu)}$ (ienākošās un izejošās plūsmas ir vienādas)
+	\item ja $u \ne a$, $u \ne z$, tad $\sum_{v}{f(uv)} = \sum_{v}{f(v_u)}$ (ienākošās un izejošās plūsmas ir vienādas)
 	\item $\sum_{u}{f(au)}$ = maksimālā iespējamā plūsma tīklā
 \end{itemize}
 
@@ -576,43 +746,62 @@ Ja nav zināma sākuma un beigu virsotne, tad ir iespējas pārveidot tīklu
 \end{center}
 
 \subsubsection{Šķēlums}
+
 \textbf{Def.}  Šķēlums - šķautņu kopa $E$, ka jebkurš ceļš (a,z) iet caur E.
+
 \textbf{Def.} Šķēluma caurlaidība - \begin{equation}c(E ) = \sum_{uv \in E}{c(uv)}\end{equation} (plūsmas virziens no kopas, kas satur a uz kopu, kas satur z).
 
-Šķēlums ({a, b, c}, {d, e, z}) sastāv no šķautnēm bd, be un ce, bet ne no dc, jo vērsta pretējā virzienā.
-%[TK: figure]
+Šķēlums $(\{a, b, c\}, \{d, e, z\})$ sastāv no šķautnēm bd, be un $K_e$, bet ne no dc, jo vērsta pretējā virzienā.
 
-\textbf{T. } Plūsma a → z nevar būt lielāka par (Forda-Folkensona algoritms/procedūra, z)-šķēluma caurlaidību
+\textbf{T. } Plūsma $a \to z$ nevar būt lielāka par (Forda-Folkensona algoritms/procedūra, z) - šķēluma caurlaidību
 
-\textbf{T. } Jebkurai a-z plūsmai tīklā plūsma no a ir vienāda ar plūsmu, kas nonāk z.
+\subsubsection{Forda-Folkensona T.}
 
-\textbf{Def.} Plūsmas vērtība |f | ir vienāda ar plūsmu, kas iziet no sākuma virsotnes, jeb saskaņā ar teorēmu plūsmu, kas nonāk z.
+\textbf{T. }(Max plūsma $A \to B$) = (Min šķēlums, kas atdala A un B)
+Apgalvojums: (Max ceļu skaits bez kopīgām virsotnēm) = (Max plūsma)\index{šķēlums}
+\subsubsection{Mengera teorēma}
 
-\textbf{T. }Jebkurai a-z plūsmai un a-z šķēlumam tīklā |f | ≤ c(E ).
+Kāds ir mazākais šķautņu skaits šķēlumā, kas atdala A no B?
+Mengera \textbf{T. } Ja mazākajā šķēlumā, kas atdala A no B ir k šķautnes, tad var atrast k ceļus no A uz B, kuriem nav kopīgu šķautņu.  (Min šķēlums) = (Max ceļu skaits no A uz B bez kopīgām virsotnēm). Lielākais iespējamais nekaimiņu virsotnes x un y savienojošu iekšēji nešķeļošos ceļu skaits vienāds ar mazākās x un y atdalošās kopas apjomu.\index{megnera teorēma}\index{šķēlums}
 
-Iepriekšējā teorēma saka, ka a-z plūsmas vērtība nevar pārsniegt jebkura a-z šķēluma caurlaidību. No tā seko, ka kāda a-z plūsma f* ir vienāda ar kādu a-z šķēlumu. Tādā gadījumā f* ir jābūt maksimālās plūsmas lielumam. Pārliecināsimies, ka jebkuram plūsmas tīklam var konstruēt a-z plūsmu, kuras vērtība ir vienāda ar kādu a-z šķēlumu un tā ir plūsma ar maksimālo vērtību.
-Intuitīva pieeja, lai risinātu problēmu varētu būt plūsmas sadalīšana pa vienas vienības ceļiem.  Sekojoši maksimālo plūsu varētu veidot skaitot kopā šādus a-z vienas vienības ceļus, vienmēr pārliecinoties, ka nevienas šķautnes caurlaidība nav pārsniegta.  Tādējādi plūsmas papildināšanai varētu izmantot tikai nepiesātinātas šķautnes, tas ir tādas, kur jau uzkonstruētā plūsma neaizņem visu caurlaidību.
+
+\textbf{T. } Jebkurai $a-z$ plūsmai tīklā plūsma no a ir vienāda ar plūsmu, kas nonāk z.
+
+\textbf{Def.} Plūsmas vērtība $|f |$ ir vienāda ar plūsmu, kas iziet no sākuma virsotnes, jeb saskaņā ar teorēmu plūsmu, kas nonāk z.
+
+\textbf{T. }Jebkurai $a-z$ plūsmai un $ a-z$ šķēlumam tīklā $|f | \le c(E )$.
+
+Iepriekšējā teorēma saka, ka $a-z$ plūsmas vērtība nevar pārsniegt jebkura $a-z$ šķēluma caurlaidību. No tā seko, ka kāda $a-z$ plūsma $f*$ ir vienāda ar kādu $a-z$ šķēlumu. Tādā gadījumā $f*$ ir jābūt maksimālās plūsmas lielumam. Pārliecināsimies, ka jebkuram plūsmas tīklam var konstruēt $a-z$ plūsmu, kuras vērtība ir vienāda ar kādu $a-z$ šķēlumu un tā ir plūsma ar maksimālo vērtību.
+Intuitīva pieeja, lai risinātu problēmu varētu būt plūsmas sadalīšana pa vienas vienības ceļiem.  Sekojoši maksimālo plūsu varētu veidot skaitot kopā šādus $a-z$ vienas vienības ceļus, vienmēr pārliecinoties, ka nevienas šķautnes caurlaidība nav pārsniegta.  Tādējādi plūsmas papildināšanai varētu izmantot tikai nepiesātinātas šķautnes, tas ir tādas, kur jau uzkonstruētā plūsma neaizņem visu caurlaidību.
 
 Kā izvairīties no šādām situācijām un vai būtu iespējams uzlabot plūsmas ceļu izvēles? Tas ir problemātiski piemērojot iepriekš aplūkoto pieeju, taču ir algoritms/procedūra, kas ļauj uzlabot plūsmu un palielināt plūsmu.  Tīklu ar atrasto plūsmu 7 var pārzīmēt, lai uzskatāmāk redzams, ka caur šķautni bc plūsma virzās pretējāvirzienā ar vērtību 5 (no kopas, kas satur z un kopu, kas satur a).  Par cik vienībām plūsma šķautnē be varētu tapt samazināta?
 
 \subsubsection{Forda-Folkensona algoritms/procedūra}
 
-\textbf{Def.} c'(uv) - šķautnes uv caurlaidība reziduālajā tīklā; Ja nav plūsma u → v vai v → u: c 0 (uv ) = c(uv ); Ja ir plūsma u → v : c 0 (uv ) = c(uv ) − f (uv ); Ja ir plūsma v → u: c 0 (uv ) = c(uv ) + f (uv ); Ja ir plūsma f(uv) un tiek pievienota f'.
+\textbf{Def.} $c'(uv)$ - šķautnes uv caurlaidība reziduālajā tīklā
+\begin{itemize}
+	\item Ja nav plūsma $u \to v$ vai $v \to u$: $c' (uv ) = c(uv )$; Ja ir plūsma $u → v$ : $c' (uv ) = c(uv ) − f (uv )$
+	\item Ja ir plūsma $v \to u$: $c' (uv ) = c(uv ) + f (uv )$
+	\item Ja ir plūsma $f(uv)$ un tiek pievienota $f'$.
+\end{itemize}
 
-Var pārsūtīt plūsmu f 0 ≤ f pretējā virzienā samazinot plūsmu u → v pa f'.
+Var pārsūtīt plūsmu $f' \le f$ pretējā virzienā samazinot plūsmu $u \to v$ pa $f'$.
 
-Reziduālais tīkls
-%[TK: piemērs]
+\illustration{1}{Ford_Folkenson_proc-1}{Forda-Folkensona procedūras piemērs}
 
 \section{Sapārojumi grafos}
 \subsection{Definīcijas}
 
-\textbf{Def.} Sapārojums ir šķautņu kopa, kur katra virsotne pieder ≤ 1 no šķautnēm. Citiem vārdiem, grafa G sapārojums M (matching) ir G apakšgrafs, kurā nevienai šķautnei nav kopīga virsotne ne ar vienu citu šķautni. Katrai virsotnei sapārojumā ir virsotne 1, tas ir, katra virsotne ir galavirsotne vienai šķautnei. Šķautņu skaits sapārojumā raksturo sapārojuma izmēru |M|.
-\textbf{Def.} Maksimāls sapārojums M grafā G ir tad, ja vairs nav iespējams pievienot sapārojumam M papildus citas šķautnes no G.
+\textbf{Def.} Sapārojums ir šķautņu kopa, kur katra virsotne pieder $\le 1$ no šķautnēm. Citiem vārdiem, grafa $G$ sapārojums $M$ (matching) ir $G$ apakšgrafs, kurā nevienai šķautnei nav kopīga virsotne ne ar vienu citu šķautni. Katrai virsotnei sapārojumā ir virsotne 1, tas ir, katra virsotne ir galavirsotne vienai šķautnei. Šķautņu skaits sapārojumā raksturo sapārojuma izmēru $|M|$.
+
+\textbf{Def.} Maksimāls sapārojums $M$ grafā $G$ ir tad, ja vairs nav iespējams pievienot sapārojumam M papildus citas šķautnes no $G$.
+
 \textbf{Def.} Sapārojuma maksimums ir tad, ja sapārojumam ir lielākais iespējamais izmērs grafā. Tas ir lielākais maksimālais sapārojums.  Vienam grafam var būt vairāki maksimumi.
 
 \textbf{Def.} Neatkarīgas šķautnes - tām nav kopīgas virsotnes Neatkarīga kopa - satur virsotnes starp kurām nav šķautnes.
+
 \textbf{Def.} Divdaļīgs grafs - virsotnes var sadalīt divās neatkarīgās kopās.
+
 \textbf{Def.} Divdaļīgs grafs ir līdzsvarā, ja tam abās kopās ir vienāds skaits virsotņu.
 
 \subsection{Holla teorēma}
@@ -621,7 +810,7 @@ Interesē jautājums - kā atrast sapārojuma maksimumu?  It īpaši intere
 
 %[TK: piemērs ]
 
-Holla \textbf{T. }Ja pilna sapārojuma nav ⇒ var atrast k virsotnes kreisajā pusē, kas savienotas ar ≤ k − 1 virsotnēm labajā pusē.  Ja ir šāda situācija, tad sapārojuma nav.
+Holla \textbf{T. }Ja pilna sapārojuma nav $⇒$ var atrast k virsotnes kreisajā pusē, kas savienotas ar $\le k − 1$ virsotnēm labajā pusē.  Ja ir šāda situācija, tad sapārojuma nav.
 
 \subsection{Pagarinošie ceļi}
 
@@ -631,49 +820,14 @@ Kā konstruēt sapārojumu?  Grafā izvēlas šķautnes saskaņā ar sa
 
 Nepilni pagarinoši ceļi: izvēlas virsotni, kas nav sapārota; veido ceļu pārmaiņus no šķautnēm, kas nepieder sapārojumam (zilas) un šķautnēm, kas pieder sapārojumam (sarkanas); ceļu noslēdz ar virsotni, kas ir sapātota, izvēlas virsotni, kas nav sapārota; apluko virsotnes, kur no tās var nokļūt pa nepilnu pagarinošu ceļu; ja nav pagarinoša ceļa, tad esošo sapārojumu nevar palielināt.
 
-\textbf{T. } Ja sapārojums M nav maksimāls, tad esksitē pagarinošs ceļš.
+\illustration{1}{nepilni_pagar_celi-1}{Pagarinošo ceļu konstruēšana}
+
+\textbf{T. } Ja sapārojums $M$ nav maksimāls, tad esksitē pagarinošs ceļš.
 
 \subsection{Plūsmas tīklā metode}
 
-Plūsmas grafa izmantošana, lai risinātu divdaļīga grafa sapārošanas uzdevumu. Dotam divdaļu grafam G = (A u B, E ) orientē šķautnes no A uz B, pievieno jaunas virsotnes: sākuma virsotni a un beigu virsotni z. Pievieno papildus orientētas šķautnes no a uz katru virsotni A. Pievieno papildus orientētas šķautnes no virsotnēm B uz beigu virsotni z. Visas šķautņu caurlaides spējas pieņem kā 1. Atrisina maksimālās plūsmas problēmu jaunizveidotajā grafā G'.  Šķautnes, kas tiek izmantotas maksimālās plūsmas tīklā atbilsts maksimuma sapārojumam.
+Plūsmas grafa izmantošana, lai risinātu divdaļīga grafa sapārošanas uzdevumu. Dotam divdaļu grafam $G = (A \cup B, E )$ orientē šķautnes no A uz B, pievieno jaunas virsotnes: sākuma virsotni a un beigu virsotni z. Pievieno papildus orientētas šķautnes no a uz katru virsotni A. Pievieno papildus orientētas šķautnes no virsotnēm B uz beigu virsotni z. Visas šķautņu caurlaides spējas pieņem kā 1. Atrisina maksimālās plūsmas problēmu jaunizveidotajā grafā $G'$.  Šķautnes, kas tiek izmantotas maksimālās plūsmas tīklā atbilsts maksimuma sapārojumam.
 
-\textbf{Def.}  Grafs ir sakarīgs, ja jebkurām virsotnēm u, v eksistē ceļš no u uz v.
-
-\section{Sakarīgs un nesakarīgs grafs}
-
-\textbf{Def.}  Grafa sakarīgā komponente G'=(V',E'), kur V' ir maksimālā virsotņu kopa ar īpašību,
-ka katrām divām virsotnēm u,v ∈ V 0 eksistē ceļš u → v , E':uv ∈ E , u ∈ V 0 , v ∈ V 0 .
-
-\subsection{Sakarīga komponente}
-
-\textbf{Def.}  Par grafa G sakarīgo komponenti jeb komponenti sauc jebkuru maksimālu sakarīgu apakšgrafu.  Maksimāls nozīmē, ka apakšgrafam zūd sakarības īpašība, ja tam pievieno vēl kādu no grafa G virsotnēm. Tas nozīmē, ja apakšgrafu var papildināt līdz lielākam, bet tomēr vēl sakarīgam, tad vēl nav bijusi aplūkota komponente.  Sakarīgu komponenšu skaitu apzīmē ar s.  Grafu G sauc apr viensakarīgu, ja tas ir sakarīgs, bet atmetot vienu virsotni v līdz ar tai incidentām šķautnēm, rodas nesakarīgs grafs. Šādu virsotni v sauc par sasaistes virsotni.
-
-\textbf{Def.} Grafu G sauc par divaskarīgu, ja tas nav viensakarīgs, bet atmetot 2 virsotnes vi un vj un tām incidentās šķautnes - rodas nesakarīgs grafs. Trīssakarīgs ir tāds grafs, kas nav divsakarīgs, bet atmetot 3 virsotnes ar tām incidentām šķautnēm, rodas nesakarīgs grafs.
-
-k-sakarība
-\textbf{Def.} Ceļa iekšējās virsotnes - virsotnes, kas nav tā gali.  Grafs ir k-sakarīgs, ja katrām tā divām virsotnēm eksistē vismaz k šīs virsotnes savienojošu ceļu bez kopējām iekšējām virsotnēm (iekšēji nešķeļošies ceļi).  Visiem k1 > k2 no k1-sakarības seko k2-sakarība.  Par grafa sakarības skaitli, sauc lielāko k, pie kura šis grafs ir k-sakarīgs.
-
-Koks ir 1-sakarīgs, bet nav 2-sakarīgs.  Ja grafs ir nesakarīgs, tad tas ir 0-sakarīgs un nav 1-sakarīgs.  Grafs ir sakarīgs, tad un tikai tad, ja tas ir 1-sakarīgs.  Pilns grafs Kn ir (n – 1)-sakarīgs.  Ja grafs ir k-sakarīgs, tad k ≤ mind(v), kur d(v) ir virsotnes v pakāpe.
-
-\subsubsection{Sadalošā un atdalošā kopa}
-
-\textbf{Def.}  Sakarīga grafa G = (V, E) virsotņu apakškopu S sauc par sadalošo kopu, ja grafs
-G(V—S) ir nesakarīgs.
-Sakarīga grafa sadalošā virsotne veido sadalošo kopu.  Grafam Kn nav nevienas sadalošās kopas.
-
-\textbf{Def.}  Grafa G = (V, E) virsotņu apakškopu S sauc par virsotnes x un y atdalošo kopu, ja x un y pieder dažādām G(V – S) sakarīgajām komponentēm.
-
-\textbf{Def.} Šķēlums ir šķautņu kopa, kuru izmetot grafs sadalās divās daļās.
-
-\subsection{Teorēmas}
-
-\subsubsection{Mengera teorēma}
-Kāds ir mazākais šķautņu skaits šķēlumā, kas atdala A no B?
-Mengera \textbf{T. } Ja mazākajā šķēlumā, kas atdala A no B ir k šķautnes, tad var atrast k ceļus no A uz B, kuriem nav kopīgu šķautņu.  (Min šķēlums) = (Max ceļu skaits no A uz B bez kopīgām virsotnēm). Lielākais iespējamais nekaimiņu virsotnes x un y savienojošu iekšēji nešķeļošos ceļu skaits vienāds ar mazākās x un y atdalošās kopas apjomu.
-
-\subsection{Forda-Folkensona T.}
-\textbf{T. }(Max plūsma A → B) = (Min šķēlums, kas atdala A un B)
-Apgalvojums: (Max ceļu skaits bez kopīgām virsotnēm) = (Max plūsma)
 
 \printindex
 
